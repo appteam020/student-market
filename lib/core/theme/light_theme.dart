@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'colors.dart';
 
-ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light,
+class LightAppTheme {
+  static final ThemeData themeData = ThemeData(  brightness: Brightness.light,
   fontFamily: 'IBMPlexSansArabic',
   scaffoldBackgroundColor: colors.background,
   primaryColor: colors.primary,
@@ -24,3 +24,4 @@ ThemeData lightTheme = ThemeData(
     labelLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
   ),
 );
+}
