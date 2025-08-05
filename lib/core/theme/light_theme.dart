@@ -4,7 +4,7 @@ import 'colors.dart';
 class LightAppTheme {
   static final ThemeData themeData = ThemeData(  brightness: Brightness.light,
   fontFamily: 'IBMPlexSansArabic',
-  scaffoldBackgroundColor: colors.background,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
   primaryColor: colors.primary,
   
   appBarTheme: AppBarTheme(
@@ -16,8 +16,8 @@ class LightAppTheme {
   textTheme: TextTheme(
     displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
     headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    headlineMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-    headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+    headlineMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+    headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
     bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
     bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
     labelSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),

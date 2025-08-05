@@ -122,6 +122,8 @@ class Assets {
   /// assets/images/photo.png
   static const String assetsImagesPhoto = "assets/images/photo.png";
 
+  static const String logo = "assets/images/logo.png";
+
   /// Assets for assetsImagesQuestionCircle
   /// assets/images/question-circle.png
   static const String assetsImagesQuestionCircle = "assets/images/question-circle.png";
@@ -165,5 +167,6 @@ class Assets {
   /// Assets for assetsImagesVector(9)
   /// assets/images/Vector(9).svg
   static const String assetsImageslove = "assets/images/Vector(9).svg";
+  static const String assetsImageslogo = "assets/images/logo.svg";
 }
 
