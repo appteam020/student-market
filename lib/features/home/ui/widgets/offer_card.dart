@@ -6,8 +6,7 @@ class OfferCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String price;
-  final bool isFavorite;
-  final VoidCallback onFavoriteTap;
+  final String seller;
   final VoidCallback onTap;
 
   const OfferCard({
@@ -15,81 +14,77 @@ class OfferCard extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.price,
-    required this.onFavoriteTap,
+    required this.seller,
     required this.onTap,
-    this.isFavorite = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 250.w,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          margin: EdgeInsets.only(right: 16.w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.r),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.03),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 250.w,
+        margin: EdgeInsets.only(right: 12.w),
+        padding: EdgeInsets.all(8.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(2, 2,),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // صورة المنتج
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.r),
+              child: Image.asset(
+                imagePath,
+                height: 80.h,
+                width: 80.w,
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // الصورة
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12.r),
-                  topRight: Radius.circular(12.r),
-                ),
-                child: Image.asset(
-                  imagePath,
-                  height: 170.h,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(12.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          price,
-                          style: Theme.of(context).textTheme.labelLarge?.copyWith(color:colors.primary),
+            ),
+            SizedBox(width: 12.w),
+
+            // تفاصيل المنتج
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
                         ),
-                        GestureDetector(
-                          onTap: onFavoriteTap,
-                          child: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: isFavorite ? Colors.red : colors.textSecondary,
-                            size: 20.sp,
-                          ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    price,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
-                   
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    seller,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: colors.textSecondary,
+                        ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

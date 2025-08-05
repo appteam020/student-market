@@ -44,12 +44,13 @@ class ProductCardSmall extends StatelessWidget {
             // صورة المنتج
             ClipRRect(
               borderRadius: BorderRadius.only(
+
                 topLeft: Radius.circular(12.r),
                 topRight: Radius.circular(12.r),
               ),
               child: Image.asset(
                 imagePath,
-                height:200.h,
+                height:250.h,
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),

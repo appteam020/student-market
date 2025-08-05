@@ -14,8 +14,10 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
+      backgroundColor: colors.cards,
       body: SafeArea(
+       
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(

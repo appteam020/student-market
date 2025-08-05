@@ -4,7 +4,7 @@ import 'colors.dart';
 class LightAppTheme {
   static final ThemeData themeData = ThemeData(  brightness: Brightness.light,
   fontFamily: 'IBMPlexSansArabic',
-  scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
+  scaffoldBackgroundColor: const Color(0xFFF8F9FA),
   primaryColor: colors.primary,
   
   appBarTheme: AppBarTheme(

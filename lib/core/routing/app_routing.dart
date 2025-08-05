@@ -6,6 +6,7 @@ import 'package:market_student/features/forget%20password/ui/reset_password.dart
 import 'package:market_student/features/home/ui/home.dart';
 import 'package:market_student/features/login/ui/login_screen.dart';
 import 'package:market_student/features/login/ui/signup.dart';
+import 'package:market_student/features/product/ui/product_details.dart';
 import 'package:market_student/features/splash/ui/SplashScreen.dart';
 import 'package:market_student/features/on_boarding/ui/on_boarding.dart';
 
@@ -41,6 +42,8 @@ final GoRouter router = GoRouter(
     path: '/home',
    builder: (context, state) => const HomeScreen(),
 ),
+  GoRoute(path: '/product_details',
+  builder: (context, state) => ProductDetails(),)
     // Assuming OTP screen is similar
     
   ],

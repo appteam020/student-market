@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:easy_localization/easy_localization.dart'; // استيراد easy_localization
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/features/home/ui/widgets/bottom_nav.dart';
+import 'package:market_student/features/home/ui/widgets/productcard.dart';
 import 'widgets/home_header.dart';
 import 'widgets/search_filter_bar.dart';
 import 'widgets/category_chip.dart';
-import 'package:market_student/features/home/ui/widgets/offer_card.dart';
+import 'widgets/offer_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     (i) => {
       'title_key': 'product_media_law_book',
       'price_key': 'product_price_example',
+      'seller_key': 'user_name',
       'image': 'assets/images/product.png',
     },
   );
@@ -56,9 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final product = _products[index];
     final isFav = _favoriteIndices.contains(index);
     return GestureDetector(
-      onTap: () {
-        // تفتح تفاصيل المنتج
-      },
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
@@ -74,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // صورة
             ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12.r),
@@ -82,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Image.asset(
                 product['image']!,
-                height: 100.h,
+                height: 150.h,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -93,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tr(product['title_key']!), // استخدام المفتاح للترجمة
+                    tr(product['title_key']!),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -105,11 +103,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        tr(product['price_key']!), // استخدام المفتاح للترجمة
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelSmall
-                            ?.copyWith(color: Colors.green),
+                        tr(product['price_key']!),
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colors.primary),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -123,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: Icon(
                           isFav ? Icons.favorite : Icons.favorite_border,
-                          color: isFav ? Colors.red : Colors.grey,
+                          color: isFav ? Colors.red : colors.textSecondary,
                           size: 18.sp,
                         ),
                       )
@@ -140,7 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // تهيئة ScreenUtil
     ScreenUtil.init(context, designSize: const Size(360, 690));
 
     return Scaffold(
@@ -157,34 +151,30 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: Padding(
+          
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SingleChildScrollView(
             child: Column(
+             
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 16.h),
-
-                // Header
                 HomeHeader(
-                  userName: tr('user_name'), // استخدام المفتاح للترجمة
+                  userName: tr('user_name'),
                   avatarPath: 'assets/images/user.png',
                   onNotifications: () => context.push('/notifications'),
                 ),
-
-                SizedBox(height: 32.h),
-
-                // Search + Filter
+                SizedBox(height: 24.h),
                 SearchFilterBar(
                   controller: _searchController,
                   onFilterTap: () {},
                   onChanged: (q) {},
                 ),
-
-                SizedBox(height: 32.h),
+                SizedBox(height: 24.h),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    tr("section_categories"), // استخدام المفتاح للترجمة
+                    tr("section_categories"),
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: colors.textPrimary,
@@ -202,17 +192,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       final cat = _categories[index];
                       return CategoryChip(
                         svgAsset: cat['svg']!,
-                        title: tr(cat['title']!), // استخدام المفتاح للترجمة
+                        title: tr(cat['title']!),
                         selected: index == _selectedCategory,
                         onTap: () => setState(() => _selectedCategory = index),
                       );
                     },
                   ),
                 ),
-
                 SizedBox(height: 24.h),
-
-                // Banner
                 Container(
                   width: double.infinity,
                   height: 157.h,
@@ -233,73 +220,75 @@ class _HomeScreenState extends State<HomeScreen> {
                       'assets/images/banner.png',
                       width: double.infinity,
                       height: double.infinity,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
+                SizedBox(height: 24.h),
 
-                SizedBox(height: 32.h),
-
-                // Offers section
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    tr("section_featured_offers"), // استخدام المفتاح للترجمة
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: colors.textPrimary,
-                        ),
-                  ),
+                // قسم العروض المميزة باستخدام OfferCard
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      tr("section_featured_offers"),
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colors.textPrimary,
+                          ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        tr('action_view_all'),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: colors.textSecondary,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 16.h),
+            
                 SizedBox(
-                  height: 250.h,
-                  child: ListView.builder(
+                  height:100.h,
+                  child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: _products.length,
-                    padding: EdgeInsets.only(right: 8.w),
+                    separatorBuilder: (_, __) => SizedBox(width: 12.w),
                     itemBuilder: (context, index) {
                       final product = _products[index];
                       final isFav = _favoriteIndices.contains(index);
                       return OfferCard(
                         imagePath: product['image']!,
-                        title: tr(product['title_key']!), // استخدام المفتاح للترجمة
-                        price: tr(product['price_key']!), // استخدام المفتاح للترجمة
-                        isFavorite: isFav,
-                        onFavoriteTap: () {
-                          setState(() {
-                            if (isFav) {
-                              _favoriteIndices.remove(index);
-                            } else {
-                              _favoriteIndices.add(index);
-                            }
-                          });
-                        },
-                        onTap: () {
-                          // تفاصيل
-                        },
+                        title: tr(product['title_key']!),
+                        price: tr(product['price_key']!),
+                      
+                        seller: tr(product['seller_key']!),
+                        onTap: () {},
                       );
                     },
                   ),
                 ),
 
-                // قسم جميع المنتجات (Grid)
                 SizedBox(height: 24.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      tr('section_all_products'), // استخدام المفتاح للترجمة
+                      tr('section_all_products'),
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colors.textPrimary,
                           ),
                     ),
                     TextButton(
-                      onPressed: () {
-                        // مشاهدة الكل
-                      },
-                      child: Text(tr('action_view_all')), // استخدام المفتاح للترجمة
+                      onPressed: () {},
+                      child: Text(
+                        tr('action_view_all'),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: colors.textSecondary,
+                            ),
+                      ),
                     ),
                   ],
                 ),
@@ -312,13 +301,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 12.h,
                     crossAxisSpacing: 12.w,
-                    childAspectRatio: 0.72,
+                    childAspectRatio: 0.68,
                   ),
                   itemBuilder: (context, index) {
                     return _buildSmallProductCard(index);
                   },
                 ),
-
                 SizedBox(height: 16.h),
               ],
             ),
