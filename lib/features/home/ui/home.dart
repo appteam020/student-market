@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
              
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.h),
                 HomeHeader(
                   userName: tr('user_name'),
                   avatarPath: 'assets/images/user.png',
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                   ),
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.h),
                 SizedBox(
                   height: 90.h,
                   child: ListView.separated(
@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: 12.h),
                 Container(
                   width: double.infinity,
                   height: 157.h,
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: 12.h),
 
                 // قسم العروض المميزة باستخدام OfferCard
                 Row(
@@ -270,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                SizedBox(height: 24.h),
+                SizedBox(height: 12.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.h),
                 GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -307,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return _buildSmallProductCard(index);
                   },
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.h),
               ],
             ),
           ),

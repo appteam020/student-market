@@ -62,7 +62,22 @@
   "section_categories": "التصنيفات",
   "section_featured_offers": "عروض مميزة",
   "section_all_products": "جميع المنتجات",
-  "action_view_all": "مشاهدة الكل"
+  "action_view_all": "مشاهدة الكل",
+  "Staus:": "الحالة:",
+  "product_description": "وصف المنتج:",
+  "saller":"البائع",
+  "Contact_the_seller":"تواصل مع البائع",
+ "share_with_friend":"مشاركة مع صديق",
+ "notifications":"الاشعارات",
+ "No_new_notifications":"لا توجد إشعارات جديدة",
+ "notification_decription":"سنقوم بإعلامك عند حدوث شيء جديد.",
+ "No_items_in_favorites":"قائمة المفضلة فارغة",
+"favarite_decription":"احفظ المنتجات التي تعجبك لتصل إليها بسهولة لاحقًا."
+
+
+  
+
+ 
 
 }
 

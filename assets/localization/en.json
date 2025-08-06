@@ -60,7 +60,17 @@
   "section_categories": "Categories",
   "section_featured_offers": "Featured Offers",
   "section_all_products": "All Products",
-  "action_view_all": "View All"
+  "action_view_all": "View All",
+  "Staus:": "Status:",
+  "product_description": "Product Description:",
+ "saller":"saller",
+ "Contact_the_seller":"Contact the seller",
+ "share_with_friend":"Share with friend",
+ "notifications":"Notifications",
+ "No_new_notifications":"No new notifications",
+ "notification_decription":"We will notify you when something new happens.",
+"No_items_in_favorites":"No items in favorites",
+"favarite_decription":"Save products you like so you can easily find them later"
 
   
 }
