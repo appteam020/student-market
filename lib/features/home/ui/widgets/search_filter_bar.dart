@@ -19,15 +19,15 @@ class SearchFilterBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // Search field (يمتد حتى قبل فلتر مع فاصل 24)
+      
         Expanded(
           child: GestureDetector(
             onTap: () {
-              // تنقل على شاشة البحث
-              context.push('/search');
+           
+              context.push('/search_screen');
             },
             child: AbsorbPointer(
-              // يخلي الحقل قابل للنقر لكنه لا يفتح لوحة المفاتيح لأننا ننتقل
+       
               child: TextField(
                 controller: controller,
                 onChanged: onChanged,
@@ -61,9 +61,8 @@ class SearchFilterBar extends StatelessWidget {
           ),
         ),
 
-        SizedBox(width: 8.w), // الفاصل المطلوب
+        SizedBox(width: 8.w), 
 
-        // Filter button
         SizedBox(
           height: 52.h,
           width: 52.h,

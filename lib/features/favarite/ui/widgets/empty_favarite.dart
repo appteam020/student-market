@@ -16,8 +16,8 @@ class EmptyFavarite extends StatelessWidget {
       children: [
         SvgPicture.asset(
           'assets/images/empty_favarite.svg',
-          width: 150.w,
-          height: 150.h,
+          width: 100.w,
+          height: 100.h,
         ),
         const SizedBox(height: 20),
         Text(

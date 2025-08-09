@@ -9,6 +9,7 @@ import 'package:market_student/features/login/ui/login_screen.dart';
 import 'package:market_student/features/login/ui/signup.dart';
 import 'package:market_student/features/notification/ui/notification_screen.dart';
 import 'package:market_student/features/product/ui/product_details.dart';
+import 'package:market_student/features/search/ui/search_screen.dart';
 import 'package:market_student/features/splash/ui/SplashScreen.dart';
 import 'package:market_student/features/on_boarding/ui/on_boarding.dart';
 
@@ -52,6 +53,9 @@ final GoRouter router = GoRouter(
     builder: (context, state) => NotificationScreen(),),
 
     GoRoute(path: '/favarite',
-    builder: (context, state) => Favarite(),)
+    builder: (context, state) => Favarite(),),
+
+    GoRoute(path: '/search_screen',
+    builder: (context, state) => SearchScreen(),)
   ],
 );

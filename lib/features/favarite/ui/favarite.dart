@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:market_student/core/widget/app_bar.dart';
 import 'package:market_student/features/favarite/ui/widgets/empty_favarite.dart';
@@ -9,7 +10,7 @@ class Favarite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "المفضلة",),
+      appBar: CustomAppBar(title: tr("Favorites")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(

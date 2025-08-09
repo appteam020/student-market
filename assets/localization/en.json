@@ -70,7 +70,9 @@
  "No_new_notifications":"No new notifications",
  "notification_decription":"We will notify you when something new happens.",
 "No_items_in_favorites":"No items in favorites",
-"favarite_decription":"Save products you like so you can easily find them later"
+"favarite_decription":"Save products you like so you can easily find them later",
+"Favorites":"Favorites",
+"Recently_Searched":"Recently Searched"
 
   
 }
