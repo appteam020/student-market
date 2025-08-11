@@ -72,7 +72,17 @@
 "No_items_in_favorites":"No items in favorites",
 "favarite_decription":"Save products you like so you can easily find them later",
 "Favorites":"Favorites",
-"Recently_Searched":"Recently Searched"
+"Recently_Searched":"Recently Searched",
+ "cancel": "Cancel",
+  "filter": "Filter",
+  "reset": "Reset",
+  "product_condition": "Condition",
+  "new": "New",
+  "slightly_used": " Slightly used",
+  "heavily_used": " Heavily used",
+  "old": "Old",
+  "price_range": "Price Range",
+  "view_results": " View results"
 
   
 }

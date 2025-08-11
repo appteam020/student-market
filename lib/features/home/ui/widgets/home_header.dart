@@ -36,14 +36,12 @@ class HomeHeader extends StatelessWidget {
               children: [
             
                 Text(
-                  // لو عندك ترجمة استخدمي: 'hello_name'.tr(args: [userName])
                   'hello_name'.tr(args: [userName]),
                   style: Theme.of(context).textTheme.headlineSmall,
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  // سطر ثانٍ اختياري (وصف قصير)
                   'استكشف أحدث المنتجات حولك',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color:colors.textSecondary,

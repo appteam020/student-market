@@ -74,7 +74,17 @@
  "No_items_in_favorites":"قائمة المفضلة فارغة",
 "favarite_decription":"احفظ المنتجات التي تعجبك لتصل إليها بسهولة لاحقًا.",
 "Favorites":"المفضلة",
-"Recently_Searched":"بحث عنه مؤخرا"
+"Recently_Searched":"بحث عنه مؤخرا",
+ "cancel": "إلغاء",
+  "filter": "تصفية",
+  "reset": "إعادة تعيين",
+  "product_condition": "حالة المنتج",
+  "new": "جديد",
+  "slightly_used": "مستعمل قليلاً",
+  "heavily_used": "مستعمل كثيراً",
+  "old": "قديم",
+  "price_range": "نطاق السعر",
+  "view_results": "مشاهدة {0} نتيجة"
 
 
   

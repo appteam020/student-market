@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       padding: const EdgeInsets.all(0.0),
       child: AppBar(
         backgroundColor: Colors.white,
-        elevation: .5, // ارتفاع الظل
+        elevation: .5, 
       shadowColor:colors.textSecondary.withOpacity(0.3),
         centerTitle: true,
         toolbarHeight: 80.h,

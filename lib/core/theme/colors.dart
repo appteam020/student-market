@@ -9,6 +9,7 @@ class colors {
   static const Color background=Color(0xFFF8F9FA);
   static const Color textPrimary =Color(0xFF1C1C1C);
   static const Color textSecondary =Color(0xFF6C757D);
+  static const Color red =Color.fromARGB(255, 202, 42, 55);
   static const Color cards=Color(0xFFFFFFFF);
   static const Color divider=Color(0xFFE0E0E0);
 

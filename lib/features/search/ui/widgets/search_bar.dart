@@ -24,7 +24,7 @@ class SearchBarOnly extends StatelessWidget {
           child: TextField(
             controller: controller,
             onChanged: onChanged,
-            onSubmitted: (_) => onSearchTap?.call(), // عند الضغط على Enter من الكيبورد
+            onSubmitted: (_) => onSearchTap?.call(), 
             decoration: InputDecoration(
               hintText: 'ابحث عن منتج...',
               prefixIcon: GestureDetector(

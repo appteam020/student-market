@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:market_student/features/dashboard/ui/dashboard.dart';
+import 'package:market_student/features/dashboard/ui/widgets/dashboard_screen.dart';
 import 'package:market_student/features/favarite/ui/favarite.dart';
 import 'package:market_student/features/forget%20password/ui/forget_password.dart';
 import 'package:market_student/features/forget%20password/ui/otp.dart';
@@ -56,6 +58,9 @@ final GoRouter router = GoRouter(
     builder: (context, state) => Favarite(),),
 
     GoRoute(path: '/search_screen',
-    builder: (context, state) => SearchScreen(),)
+    builder: (context, state) => SearchScreen(),),
+
+    GoRoute(path: '/dashboard',
+    builder: (context, state) => DashboardScreen(),)
   ],
 );
