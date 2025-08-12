@@ -1,59 +1,109 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:market_student/core/theme/colors.dart';
 
-class RecentTransactionItem extends StatelessWidget {
+class RecentTransaction extends StatelessWidget {
+  final String photo;
   final String title;
+  final String date;
   final String price;
-  final String status;
-  final String date ; 
-  final String imageUrl;
+  final String state;
 
 
-  const RecentTransactionItem({
+  const RecentTransaction({
     super.key,
+    required this.photo,
     required this.title,
-    required this.price,
-    required this.status,
-    required this.imageUrl, 
     required this.date,
-
+   required this.price,
+    required this.state,
   });
 
   @override
   Widget build(BuildContext context) {
-    
-    return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
-      child: Padding(
-        padding: EdgeInsets.all(12.w),
-        child: Row(
-          children: [
-            Image.asset(imageUrl, width: 48.w, height: 48.w),
-            SizedBox(width: 12.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: Theme.of(context).textTheme.bodyMedium),
-                  SizedBox(height: 4.h),
-                  Text(date, style: TextStyle(color: Colors.green)),
-                ],
-              ),
+    return Container(
+      padding: EdgeInsets.all(12.w),
+      decoration: BoxDecoration(
+        color:const Color.fromARGB(255, 255, 255, 255),
+        borderRadius: BorderRadius.circular(8.r),
+        
+        boxShadow: [
+          BoxShadow(
+            color: colors.textSecondary.withOpacity(0.1),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          )
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+         Image.asset(
+            photo,
+            width: 85.w,
+            height: 85.h,
+          ),
+          SizedBox(width: 12.w),
+
+          Expanded(
+            child: Column(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colors.textPrimary,
+                      ),
+                ), SizedBox(height: 24.h,),
+                
+                Text(
+                  date,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: colors.textSecondary,
+                      ),
+                ),
+              ],
             ),
-   Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                     Text(price, style: Theme.of(context).textTheme.bodyMedium),
-                  SizedBox(height: 4.h),
-                  Text(status, style: TextStyle(color: Colors.green)),
-                ],
-              ),
-            ),
-           
-          ],
+          ),
+
+         
+           Column(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+            
+            children: [
+Text(
+ price,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: colors.textPrimary,
+                      ),
+                ),
+
+             
+
+           SizedBox(height: 24.h,),
+             Container(
+  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h), 
+  decoration: BoxDecoration(
+    color: colors.secondary.withOpacity(.3),
+    borderRadius: BorderRadius.circular(8),
+  ),
+  alignment: Alignment.center, 
+  child: Text(
+    state,
+    textAlign: TextAlign.center, 
+    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: colors.secondary,
+          fontWeight: FontWeight.bold,
         ),
+  ),
+)
+              
+            ],
+           
+         )
+        ],
       ),
     );
   }

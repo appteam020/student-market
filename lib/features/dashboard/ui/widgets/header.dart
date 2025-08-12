@@ -5,7 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:market_student/core/theme/colors.dart';
 
 class DashboardHeader extends StatelessWidget implements PreferredSizeWidget {
-  const DashboardHeader({super.key});
+  final String title;
+  const DashboardHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,8 @@ class DashboardHeader extends StatelessWidget implements PreferredSizeWidget {
      shadowColor:colors.textSecondary.withOpacity(0.3),
       toolbarHeight: 80.h,
       title: Text(
-        "لوحة التحكم",
+        title,
+       
         style: TextStyle(color:colors.textPrimary),
       ),
       leading:IconButton(onPressed: (){},

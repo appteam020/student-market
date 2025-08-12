@@ -84,7 +84,19 @@
   "heavily_used": "مستعمل كثيراً",
   "old": "قديم",
   "price_range": "نطاق السعر",
-  "view_results": "مشاهدة {0} نتيجة"
+  "view_results": "مشاهدة النتيجة",
+  "total_profit": "الأرباح الإجمالية",
+  "sold_products": "المنتجات المباعة",
+  "my_products": "منتجاتي الحالية",
+  "likes": "الإعجابات",
+  "recent_transactions": "المعاملات الأخيرة",
+  "view_all": "عرض الكل",
+  "My_Products":"منتجاتي ",
+  "dashboard": "لوحة التحكم",
+  "haven't_posted_product": "لم تقم بنشر أي منتج بعد",
+  "product_decription":"ابدأ ببيع أغراضك المستعملة بكل سهولة!",
+  "add_new_product": "إضافة منتج جديد"
+
 
 
   

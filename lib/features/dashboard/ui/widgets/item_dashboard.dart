@@ -22,15 +22,14 @@ class ItemDashboard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(24.w),
       child: Container(
-        width: 150.w,
+     
         decoration: BoxDecoration(
           color: backgroundColor, 
           borderRadius: BorderRadius.circular(12.r),
         ),
         padding: EdgeInsets.all(16.w),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+         crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           SvgPicture.asset(
               svgIcon,

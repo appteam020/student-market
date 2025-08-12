@@ -82,7 +82,19 @@
   "heavily_used": " Heavily used",
   "old": "Old",
   "price_range": "Price Range",
-  "view_results": " View results"
+  "view_results": " View results",
+   "total_profit": "Total Profit",
+  "sold_products": "Sold Products",
+  "my_products": "My Current Products",
+  "likes": "Likes",
+  "recent_transactions": "Recent Transactions",
+  "view_all": "View All",
+  "My_Products":"My Products",
+  "dashboard": "Dashboard ",
+  "haven't_posted_product": "You haven't posted any products yet. ",
+  "product_decription":"Start selling your used items with ease!",
+    "add_new_product": "Add New Product"
+
 
   
 }

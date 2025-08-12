@@ -80,7 +80,7 @@ class FavariteCard extends StatelessWidget {
               ),
            SizedBox(height: 24.h,),
              Container(
-  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h), // مساحة حول النص
+  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h), 
   decoration: BoxDecoration(
     color: colors.secondary.withOpacity(.3),
     borderRadius: BorderRadius.circular(8),
