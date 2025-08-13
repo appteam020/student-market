@@ -95,7 +95,27 @@
   "dashboard": "لوحة التحكم",
   "haven't_posted_product": "لم تقم بنشر أي منتج بعد",
   "product_decription":"ابدأ ببيع أغراضك المستعملة بكل سهولة!",
-  "add_new_product": "إضافة منتج جديد"
+  "add_new_product": "إضافة منتج جديد",
+  "product_name": "اسم المنتج",
+  "enter_product_name": "أدخل اسم المنتج",
+  "product_price": "السعر ",
+  "enter_product_price": "أدخل سعر المنتج",
+  "product_category": "الفئة",
+  "condition": "الحالة",
+  "titile_photo":"أضف صور المنتج (حد أقصى 3 صور)",
+  "upload_photo": " انقر لتحميل الصور",
+  "publish_product":"نشر المنتج ",
+  "enter_product_description": "أدخل وصف المنتج",
+  "chat_title" :"لا توجد محادثات بعد",
+  "chat_description" :"اابدأ بالتواصل مع البائعين أو المشترين بعد التفاعل مع منتج!",
+  "browse_products" :"تصفح المنتجات",
+    "Chats": "الدردشة"
+
+
+
+
+
+ 
 
 
 

@@ -93,7 +93,26 @@
   "dashboard": "Dashboard ",
   "haven't_posted_product": "You haven't posted any products yet. ",
   "product_decription":"Start selling your used items with ease!",
-    "add_new_product": "Add New Product"
+    "add_new_product": "Add New Product",
+    "product_name": "Product Name",
+  "enter_product_name": " Enter product name",
+  "product_price": "Price" ,
+  "enter_product_price": "Enter product price",
+  "product_category": "Categories",
+  "condition": "Condition",
+  "titile_photo":"  Add product photos (max 3 photos)",
+  "upload_photo": " Click to upload photos",
+  "publish_product":"publish product ",
+  "enter_product_description": "Enter product description",
+  "chat_title" :"No chats yet",
+  "chat_description" :"Start chatting with other students to buy and sell products easily.",
+  "browse_products" :"browse products",
+  "Chats": "Chats"
+
+
+
+
+ 
 
 
   

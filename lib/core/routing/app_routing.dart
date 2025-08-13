@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:market_student/features/add%20product/ui/upload_product_screen.dart';
+import 'package:market_student/features/chats/ui/chats.dart';
 import 'package:market_student/features/dashboard/ui/dashboard.dart';
 import 'package:market_student/features/dashboard/ui/my_product_screen.dart';
 import 'package:market_student/features/favarite/ui/favarite.dart';
@@ -64,6 +66,12 @@ final GoRouter router = GoRouter(
     builder: (context, state) => DashboardScreen(),),
 
     GoRoute(path:'/my_product_screen',
-    builder: (context, state) => MyProductScreen(),)
+    builder: (context, state) => MyProductScreen(),),
+
+    GoRoute(path: '/add_product',
+    builder: (context, state) => UploadProductScreen(),),
+
+    GoRoute(path: '/chats',
+    builder: (context, state) => Chats(),),
   ],
 );

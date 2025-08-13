@@ -70,11 +70,14 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   Text(
                     tr('recent_transactions'),
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                     
+                      fontWeight: FontWeight.bold,
+                    )
                   ),
                   Text(
                     tr('view_all'),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.green,
                         ),
                   ),
@@ -90,22 +93,25 @@ class DashboardScreen extends StatelessWidget {
                       state: "تم البيع",
                       photo: "assets/images/books.png",
                       date: "2023-10-01",
+                      color_state: 'notCompleted', // Example state, can be 'Completed' or 'Not Completed'
                     ),
                     SizedBox(height: 12),
                     RecentTransaction(
                       title: "حاسوب محمول",
                       price: "2500 شيكل",
-                      state: "تم البيع",
+                      state: "متاح حاليا",
                       photo: "assets/images/books.png",
                       date: "2023-10-02",
+                      color_state: 'Completed', // Example state, can be 'Completed' or 'Not Completed'
                     ),
                     SizedBox(height: 12),
                     RecentTransaction(
                       title: "هاتف ذكي",
                       price: "1200 شيكل",
-                      state: "تم البيع",
+                      state:"متاح حاليا",
                       photo: "assets/images/books.png",
                       date: "2023-10-03",
+                      color_state: 'Completed', // Example state, can be 'Completed' or 'Not Completed'
                     ),
                   ],
                 ),

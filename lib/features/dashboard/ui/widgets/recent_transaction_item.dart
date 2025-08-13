@@ -9,6 +9,7 @@ class RecentTransaction extends StatelessWidget {
   final String date;
   final String price;
   final String state;
+  final String color_state ;
 
 
   const RecentTransaction({
@@ -18,6 +19,7 @@ class RecentTransaction extends StatelessWidget {
     required this.date,
    required this.price,
     required this.state,
+    required this.color_state,
   });
 
   @override
@@ -76,7 +78,8 @@ class RecentTransaction extends StatelessWidget {
 Text(
  price,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: colors.textPrimary,
+                        color: colors.orange,
+                        fontWeight: FontWeight.bold,
                       ),
                 ),
 
@@ -84,9 +87,9 @@ Text(
 
            SizedBox(height: 24.h,),
              Container(
-  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h), 
+  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h), 
   decoration: BoxDecoration(
-    color: colors.secondary.withOpacity(.3),
+    color: color_state == 'Completed' ? colors.Completed : colors.notCompleted,
     borderRadius: BorderRadius.circular(8),
   ),
   alignment: Alignment.center, 
@@ -94,7 +97,7 @@ Text(
     state,
     textAlign: TextAlign.center, 
     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: colors.secondary,
+          color: colors.textPrimary,
           fontWeight: FontWeight.bold,
         ),
   ),
