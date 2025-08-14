@@ -109,7 +109,15 @@
   "chat_title" :"لا توجد محادثات بعد",
   "chat_description" :"اابدأ بالتواصل مع البائعين أو المشترين بعد التفاعل مع منتج!",
   "browse_products" :"تصفح المنتجات",
-    "Chats": "الدردشة"
+  "Chats": "الدردشة",
+  "current_pass":"كلمة المرور الحالية",
+  "Enter_current_pass":"ادخل كلمة المرور الحالية",
+  "new_pass":"كلمة المرور الجديدة",
+  "Enter_new_password":"ادخل كلمة المرور الجديدة",
+  "Confirm_new_password":" تاكيد كلمة المرور الجديدة",
+  "Re-enter_new_password":"اعد كتابة كلمة المرور الجديدة",
+   "change_pass":"تغيير كلمة المرور",
+   "Update_password":"تحديث كلمة المرور"
 
 
 

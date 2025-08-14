@@ -43,13 +43,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
             hintText: widget.hint,
             prefixIcon: Icon(
               widget.isPassword ? Icons.lock : Icons.email,
-              color: colors.textSecondary,
+              color: colors.textSecondary.withOpacity(.5),
             ),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(
                       _obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: colors.textSecondary,
+                      color: colors.textSecondary.withOpacity(.5),
                     ),
                     onPressed: () {
                       setState(() {
@@ -60,7 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: colors.textSecondary),
+              borderSide: BorderSide(color: colors.textSecondary.withOpacity(.5)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),

@@ -13,6 +13,9 @@ import 'package:market_student/features/login/ui/login_screen.dart';
 import 'package:market_student/features/login/ui/signup.dart';
 import 'package:market_student/features/notification/ui/notification_screen.dart';
 import 'package:market_student/features/product/ui/product_details.dart';
+import 'package:market_student/features/profile/ui/change_password.dart';
+import 'package:market_student/features/profile/ui/help_center.dart';
+import 'package:market_student/features/profile/ui/profile_screen.dart';
 import 'package:market_student/features/search/ui/search_screen.dart';
 import 'package:market_student/features/splash/ui/SplashScreen.dart';
 import 'package:market_student/features/on_boarding/ui/on_boarding.dart';
@@ -73,5 +76,14 @@ final GoRouter router = GoRouter(
 
     GoRoute(path: '/chats',
     builder: (context, state) => Chats(),),
+
+    GoRoute(path:'/profile_screen',
+    builder: (context, state) => ProfileScreen()),
+
+    GoRoute(path: '/change_password',
+    builder: (context, state) => ChangePassword(),),
+
+    GoRoute(path: '/help_center',
+    builder: (context, state) => HelpCenter(),)
   ],
 );

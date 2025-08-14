@@ -1,10 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/add%20product/ui/upload_product_screen.dart';
+import 'package:market_student/features/chats/ui/chats.dart';
+import 'package:market_student/features/dashboard/ui/dashboard.dart';
 import 'package:market_student/features/home/ui/widgets/bottom_nav.dart';
-import 'package:market_student/features/home/ui/widgets/productcard.dart';
+import 'package:market_student/features/profile/ui/profile_screen.dart';
 import 'widgets/home_header.dart';
 import 'widgets/search_filter_bar.dart';
 import 'widgets/category_chip.dart';
@@ -29,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   int _selectedCategory = 0;
-  int _currentIndex = 0;
+   
+
 
   final List<Map<String, String>> _products = List.generate(
     8,
@@ -43,9 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final Set<int> _favoriteIndices = {};
 
-  void _onNavTap(int index) {
-    setState(() => _currentIndex = index);
-  }
+  
 
   @override
   void dispose() {
@@ -138,17 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ScreenUtil.init(context, designSize: const Size(360, 690));
 
     return Scaffold(
-      bottomNavigationBar: HomeBottomNav(
-        currentIndex: _currentIndex,
-        onTap: _onNavTap,
-        items: [
-          BottomNavItemData(asset: 'assets/images/home.svg', label: tr('nav_home')),
-          BottomNavItemData(asset: 'assets/images/dashboard.svg', label: tr('nav_dashboard')),
-          BottomNavItemData(asset: 'assets/images/plus-circle.svg', label: tr('nav_add_product')),
-          BottomNavItemData(asset: 'assets/images/chats.svg', label: tr('nav_chats')),
-          BottomNavItemData(asset: 'assets/images/profile.svg', label: tr('nav_profile')),
-        ],
-      ),
+     
       body: SafeArea(
         child: Padding(
           

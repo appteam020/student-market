@@ -107,7 +107,15 @@
   "chat_title" :"No chats yet",
   "chat_description" :"Start chatting with other students to buy and sell products easily.",
   "browse_products" :"browse products",
-  "Chats": "Chats"
+  "Chats": "Chats",
+  "change_pass":"Change password",
+  "current_pass":"Current Password",
+  "Enter_current_pass":"Enter Current password",
+   "new_pass":"New password",
+   "Enter_new_password":"Enter new password",
+   "Confirm_new_password":"Confirm new password",
+   "Re-enter_new_password":"Re-enter new password",
+   "Update_password":"Update password"
 
 
 
