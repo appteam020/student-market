@@ -39,16 +39,16 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.h),
+          
             UploadImageBox(onTap: () {}),
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
 
             CustomTextField(
               label: tr("product_name"),
               hint: tr("enter_product_name"),
               controller: TextEditingController(),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
 
             CustomTextField(
               label: tr("product_description"),
@@ -57,7 +57,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
               controller: TextEditingController(),
                 
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
 
             CustomTextField(
               label: tr("product_price"),
@@ -66,7 +66,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
               type: 'price',
              
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
 
             Text(
               tr("section_categories"),
@@ -97,7 +97,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                 },
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
 
             Text(
               tr("product_condition"),
@@ -111,11 +111,11 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
             _buildConditionOption("heavily_used", tr("heavily_used")),
             _buildConditionOption("old", tr("old")),
 
-            SizedBox(height: 20.h),
+            SizedBox(height: 16.h),
 
             SizedBox(
               width: double.infinity,
-              height: 50.h,
+              height: 48.h,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,

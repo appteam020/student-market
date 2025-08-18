@@ -49,39 +49,32 @@ class MyProductScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final item = items[index];
               return Dismissible(
-                key: Key(item['title']!),
-                background: Container(
-                  color: colors.orange,
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 20),
-                  child: SvgPicture.asset(
-                    'assets/images/edit.svg',
-                    height: 32.h,
-                    width: 32.w,
-                 
-                  ),
-                ),
-                secondaryBackground: Container(
-                  color: colors.red,
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 20),
-                  child: const Icon(
-                    Icons.delete,
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                ),
-                onDismissed: (direction) {
-                  if (direction == DismissDirection.startToEnd) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('تعديل: ${item['title']}')),
-                    );
-                  } else {
-                    // سحب من اليمين لليسار → حذف
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('تم حذف: ${item['title']}')),
-                    );
-                  }
+  key: Key(item['title']!),
+  background: Container(
+    color: colors.orange,
+    alignment: AlignmentDirectional.centerStart, // تحديد الموضع إلى بداية الاتجاه
+    padding: EdgeInsetsDirectional.only(start: 24.w), // إضافة مسافة من البداية
+    child: SvgPicture.asset(
+      'assets/images/edit.svg',
+      height: 24.h,
+    ),
+  ),
+  secondaryBackground: Container(
+    color: colors.red,
+    alignment: AlignmentDirectional.centerEnd, // تحديد الموضع إلى نهاية الاتجاه
+    padding: EdgeInsetsDirectional.only(end: 24.w), // إضافة مسافة من النهاية
+    child: const Icon(
+      Icons.delete,
+      size: 32,
+      color: Colors.white,
+    ),
+  ),
+  onDismissed: (direction) {
+    if (direction == DismissDirection.startToEnd) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('تعديل: ${item['title']}')),
+      );
+    }
                 },
                 child: RecentTransaction(
                   title: item['title']!,

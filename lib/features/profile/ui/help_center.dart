@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:market_student/core/theme/colors.dart';
@@ -12,7 +13,7 @@ class HelpCenter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.cards,
-      appBar: CustomAppBar(title: "Help Center",),
+      appBar: CustomAppBar(title: tr("Help_Center"),),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -21,14 +22,14 @@ class HelpCenter extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Do you have a question or issue?",
+                tr("Help_Center_title"),
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: colors.textPrimary
                 ),
               ),
               SizedBox(height: 8.h,),
                   Text(
-                "Write your question, and we will respond to you via email or in the messages section.",
+                  tr('help_center_descripiton'),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: colors.textSecondary
                 ),
@@ -36,13 +37,13 @@ class HelpCenter extends StatelessWidget {
            
                 CustomTextField(
                 label:"",
-                hint: "Write your question or inquiry here...",
+                hint: tr('helpcenter_hint'),
                 type: 'description',
                 controller: TextEditingController(),
                   
               ),
               SizedBox(height: 16.h,),
-              CustomButton(text: "Send question", onPressed:(){})
+              CustomButton(text: tr("Send_question"), onPressed:(){})
           
             ],
                 ),

@@ -46,7 +46,7 @@ class SearchProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
               child: Image.asset(
                 imagePath,
-                height: 120.h,
+                height: 130.h,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),

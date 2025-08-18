@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                  
                   Align(
                      alignment: context.locale.languageCode == 'ar'
-                     ? Alignment.centerLeft // Align left for Arabic
+                     ? Alignment.centerLeft 
                      : Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
@@ -118,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 24.h),
                    GoogleLoginButton(
                     onPressed: () {
-                      // Handle Google login
                     },
               
                   ),
@@ -127,13 +126,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('no_account'.tr()
-                      , style: TextStyle(color: colors.textSecondary)),
+                      , style: TextStyle(color: colors.textSecondary)?.copyWith(
+                        fontWeight: FontWeight.bold
+                      )),
                       
                       TextButton(
                         onPressed: () => context.push('/signup'),
                         child: Text('signup'.tr()
                         , style: Theme.of(context).textTheme.bodyMedium?.
-                        copyWith(color:colors.primary)),
+                        copyWith(color:colors.primary)?.copyWith(
+                          fontWeight: FontWeight.bold
+                        )),
                         )
                    
                     ],

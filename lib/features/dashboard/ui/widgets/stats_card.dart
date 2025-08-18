@@ -46,7 +46,7 @@ class StatsCard extends StatelessWidget {
               SizedBox(height: 12.h),
               Text(
                 title,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: colors.textPrimary,
                     ),
               ),

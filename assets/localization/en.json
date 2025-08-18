@@ -115,7 +115,20 @@
    "Enter_new_password":"Enter new password",
    "Confirm_new_password":"Confirm new password",
    "Re-enter_new_password":"Re-enter new password",
-   "Update_password":"Update password"
+   "Update_password":"Update password",
+   "search":"Search for an item or product",
+   "add_product":"Add product",
+   "Help_Center":"Help Center",
+   "Help_Center_title":"Do you have a question or issue?",
+   "help_center_descripiton":"Write your question, and we will respond to you via email or in the messages section."
+    ,"Send_question":"Send ",
+    "helpcenter_hint":"Write your question or inquiry here...",
+    "change language":"change language",
+    "logout":"logout",
+    "logout_dialog_title": "Are you sure you want to logout?",
+  "logout_dialog_message": "Your current session will be ended, and you can log in again anytime.",
+  "Choose the app language": "Choose the app language"
+ 
 
 
 

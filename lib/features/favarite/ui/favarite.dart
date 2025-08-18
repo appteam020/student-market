@@ -16,7 +16,7 @@ class Favarite extends StatelessWidget {
         child: Center(
           //child: EmptyFavarite(),
             child: ListView.separated(
-            itemCount: 3, // عددي حسب المنتجات
+            itemCount: 3,
             separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
               return FavariteCard(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +33,7 @@ class SearchFilterBar extends StatelessWidget {
                 controller: controller,
                 onChanged: onChanged,
                 decoration: InputDecoration(
-                  hintText: 'ابحث عن منتج...',
+                  hintText: tr('search'),
                   prefixIcon: Padding(
                     padding: EdgeInsets.all(12.w),
                     child: SvgPicture.asset(
@@ -61,22 +62,7 @@ class SearchFilterBar extends StatelessWidget {
           ),
         ),
 
-        SizedBox(width: 8.w), 
-
-        SizedBox(
-          height: 52.h,
-          width: 52.h,
-         
-            child: Padding(
-              padding: EdgeInsets.all(12.w),
-              child: SvgPicture.asset(
-                'assets/images/filter.svg',
-                width: 24.w,
-                height: 24.h,
-                semanticsLabel: 'filter',
-              ),
-            ),
-          ),
+       
         
       ],
     );

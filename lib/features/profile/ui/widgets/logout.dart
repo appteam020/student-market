@@ -1,5 +1,6 @@
 // logout_dialog.dart
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:market_student/core/theme/colors.dart';
@@ -24,7 +25,7 @@ class LogoutDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
                Text(
-                'Are you sure you want to log out?',
+               tr('logout_dialog_title'),
                 textAlign: TextAlign.center,
                 style:Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: colors.textPrimary,
@@ -32,7 +33,7 @@ class LogoutDialog extends StatelessWidget {
               ),
                SizedBox(height: 8),
                Text(
-                'Your current session will be ended, and you can log in again anytime.',
+                tr('logout_dialog_message'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: colors.textSecondary
@@ -53,7 +54,7 @@ class LogoutDialog extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('Logout', 
+                      child:  Text(tr('Logout'), 
                       style: TextStyle(fontSize: 16,color: colors.cards)),
                     ),
                   ),
@@ -70,8 +71,8 @@ class LogoutDialog extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
-                        'Cancel',
+                      child:  Text(
+                       tr('cancel'),
                         style: TextStyle(fontSize: 16, color:colors.notCompleted),
                       ),
                     ),

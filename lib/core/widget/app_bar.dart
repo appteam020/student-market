@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,8 +25,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         toolbarHeight: 80.h,
         leading: IconButton(
-          icon: SvgPicture.asset('assets/images/Back.svg',
-             ),
+          icon: context.locale.languageCode == 'ar'
+            ? SvgPicture.asset(
+                'assets/images/Back.svg',
+              )
+            : Transform.flip( flipX: true, 
+                child: SvgPicture.asset(
+                  'assets/images/Back.svg',
+                ),
+              ),
           onPressed: onBack ?? () => Navigator.pop(context),
         ),
         title: Text(
@@ -40,5 +48,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(80.h);
+  Size get preferredSize => Size.fromHeight(70.h);
 }

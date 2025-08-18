@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,86 +19,89 @@ class ProfileScreen extends StatelessWidget {
       child:
        Scaffold(
         backgroundColor: colors.cards,
-        appBar: CustomAppBar(title: "Profile", onBack: () => Navigator.pop(context)),
+        appBar: CustomAppBar(title: tr('nav_profile'), onBack: () => Navigator.pop(context)),
         body: Padding(
 
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ProfileHeader(
-                imageUrl: "https://i.pravatar.cc/150?img=1",
-                name: "John Doe",
-                email: "nada@gmail.com",
-                onEdit: () => {},
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ProfileHeader(
+                  imageUrl: "https://i.pravatar.cc/150?img=1",
+                  name: "John Doe",
+                  email: "nada@gmail.com",
+                  onEdit: () => {},
+                
+                  ),
+                  SizedBox(height: 16.h,),
+               Divider(),
               
-                ),
-                SizedBox(height: 16.h,),
-                Divider(),
-            
-            SwitchListTile(
-              value: true,
-              
-              onChanged: (val) {},
-              title: const Text("الإشعارات"),
-              secondary: SvgPicture.asset(
-                'assets/images/notification3.svg'
-               ),
-            ),
-            Divider(thickness: .5,
-            height: 0.5,),
-            ProfileOptionTile(
-              icon: 'assets/images/language.svg',
-              title: "تغيير اللغة",
-              onTap: () {
-                showDialog(context: context,
-                 builder: (BuildContext context){
-                  return LanguageDialog();
-                 });
-              },
-            ),
-            Divider(thickness: .5,
-            height: .5,),
-            ProfileOptionTile(
-              icon: 'assets/images/love.svg',
-              title: "المفضلة",
-              onTap: () {},
-            ),
-            Divider(thickness: .5,
-            height: .5,),
-            ProfileOptionTile(
-              icon: 'assets/images/security.svg',
-              title: "تغيير كلمة المرور",
-              onTap: () {
-                context.push('/change_password');
-              },
-            ),
-            Divider(thickness: .5,
-            height: .5,),
-            ProfileOptionTile(
-              icon: 'assets/images/help.svg',
-              title: "مركز المساعدة",
-              onTap: () {
-                context.push('/help_center');
-              },
-            ),
-            Divider(thickness: .5,
-            height: .5,),
-            ProfileOptionTile(
-              icon: 'assets/images/logout.svg',
-              title: "تسجيل الخروج",
-              iconColor: Colors.red,
-              onTap: () {
-                showDialog(
-                  
-      context: context,
-      builder: (BuildContext context) {
-        return  LogoutDialog();
-      },
-            ) ; },
-            ),
-          ],
-        ),
+              SwitchListTile(
+                value: true,
+                
+                onChanged: (val) {},
+                title:  Text(
+                  tr('notifications')),
+                secondary: SvgPicture.asset(
+                  'assets/images/notification3.svg'
+                 ),
+              ),
+              Divider(thickness: .5,
+              height: 0.5,),
+              ProfileOptionTile(
+                icon: 'assets/images/language.svg',
+                title: tr('change language'),
+                onTap: () {
+                  showDialog(context: context,
+                   builder: (BuildContext context){
+                    return LanguageDialog();
+                   });
+                },
+              ),
+              Divider(thickness: .5,
+              height: .5,),
+              ProfileOptionTile(
+                icon: 'assets/images/love.svg',
+                title: tr('Favorites'),
+                onTap: () {},
+              ),
+              Divider(thickness: .5,
+              height: .5,),
+              ProfileOptionTile(
+                icon: 'assets/images/security.svg',
+                title: tr('change_pass'),
+                onTap: () {
+                  context.push('/change_password');
+                },
+              ),
+              Divider(thickness: .5,
+              height: .5,),
+              ProfileOptionTile(
+                icon: 'assets/images/help.svg',
+                title: tr('Help_Center'),
+                onTap: () {
+                  context.push('/help_center');
+                },
+              ),
+              Divider(thickness: .5,
+              height: .5,),
+              ProfileOptionTile(
+                icon: 'assets/images/logout.svg',
+                title: tr('logout'),
+                iconColor: Colors.red,
+                onTap: () {
+                  showDialog(
+                    
+                  context: context,
+                  builder: (BuildContext context) {
+                    return  LogoutDialog();
+                  },
+              ) ; },
+              ),
+            ],
+                    ),
+          ),
       ),
     ));
   }

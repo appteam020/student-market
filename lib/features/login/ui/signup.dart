@@ -30,7 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Form(
             key: _formKey,
-            child: SingleChildScrollView( // يدعم الشاشة الصغيره
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 16.h),
                   CustomTextField(
                     controller: _emailController,
                     hint: 'enter_email'.tr(),
@@ -79,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 16.h),
                   CustomTextField(
                     controller: _passwordController,
                     hint: 'create_password'.tr(),
@@ -93,7 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 16.h),
                   CustomTextField(
                     controller: _confirmPasswordController,
                     hint: 'reenter_password'.tr(),
@@ -112,7 +112,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     text: 'signup'.tr(),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Handle signup
                       }
                     },
                   ),
@@ -130,16 +129,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 24.h),
                   GoogleLoginButton(
                     onPressed: () {
-                      // Handle Google signup
                     },
                   ),
-                  SizedBox(height: 32.h),
+                  SizedBox(height: 24.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'have_account'.tr(),
-                        style: TextStyle(color: colors.textSecondary),
+                        style: TextStyle(color: colors.textSecondary)?.copyWith(
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                       TextButton(
                         onPressed: () => context.go('/login'),
@@ -148,7 +148,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
-                              ?.copyWith(color: colors.primary),
+                              ?.copyWith(color: colors.primary)?.copyWith(
+                                fontWeight: FontWeight.bold
+                              ),
                         ),
                       ),
                     ],

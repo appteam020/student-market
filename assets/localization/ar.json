@@ -117,7 +117,23 @@
   "Confirm_new_password":" تاكيد كلمة المرور الجديدة",
   "Re-enter_new_password":"اعد كتابة كلمة المرور الجديدة",
    "change_pass":"تغيير كلمة المرور",
-   "Update_password":"تحديث كلمة المرور"
+   "Update_password":"تحديث كلمة المرور",
+   "search":"إبحث عن غرض أو منتج",
+   "add_product":"اضافة منتج",
+   "Help_Center":"مركز المساعدة ",
+   "Help_Center_title":"هل لديك سؤال أو مشكلة؟",
+   "help_center_descripiton":"اكتب سؤالك وسنقوم بالرد عليك عبر البريد الإلكتروني أو في قسم الرسائل."
+    ,"Send_question":"ارسال",
+   "helpcenter_hint":"اكتب سؤالك أو استفسارك هنا...",
+   "change language":"تغيير اللغة",
+       "logout":"تسجيل خروج",
+        "logout_dialog_title": "هل أنت متأكد من تسجيل الخروج؟",
+  "logout_dialog_message": "سيتم إنهاء جلستك الحالية، ويمكنك تسجيل الدخول مرة أخرى في أي وقت.",
+  "Choose the app language":"اختر لغة التطبيق "
+
+
+
+
 
 
 

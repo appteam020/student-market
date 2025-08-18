@@ -9,6 +9,7 @@ import 'package:market_student/features/forget%20password/ui/forget_password.dar
 import 'package:market_student/features/forget%20password/ui/otp.dart';
 import 'package:market_student/features/forget%20password/ui/reset_password.dart';
 import 'package:market_student/features/home/ui/home.dart';
+import 'package:market_student/features/home/ui/widgets/main_nav.dart';
 import 'package:market_student/features/login/ui/login_screen.dart';
 import 'package:market_student/features/login/ui/signup.dart';
 import 'package:market_student/features/notification/ui/notification_screen.dart';
@@ -23,7 +24,7 @@ import 'package:market_student/features/on_boarding/ui/on_boarding.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/splash',
   routes: [
-    GoRoute(
+     GoRoute(
       path: '/splash',
       builder: (context, state) =>  SplashScreen(),
     ),
@@ -48,6 +49,13 @@ final GoRouter router = GoRouter(
 
     GoRoute(path: '/reset_password',
     builder: (context, state) => ResetPasswordScreen(), ),
+  ShellRoute(
+    builder: (context, state, child) {
+      return MainNavigation(child: child); 
+    },
+  routes: [
+     
+   
     GoRoute(
     path: '/home',
    builder: (context, state) => const HomeScreen(),
@@ -85,5 +93,7 @@ final GoRouter router = GoRouter(
 
     GoRoute(path: '/help_center',
     builder: (context, state) => HelpCenter(),)
-  ],
-);
+    ],
+  ),
+]);
+  

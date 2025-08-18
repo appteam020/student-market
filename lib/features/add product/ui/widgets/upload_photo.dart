@@ -32,6 +32,8 @@ class UploadImageBox extends StatelessWidget {
             color: colors.cards,
             child: Center(
               child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
                children: [
                 Image.asset(
                 "assets/images/photo.png",
@@ -45,7 +47,8 @@ class UploadImageBox extends StatelessWidget {
                   style: TextStyle(
                     color: colors.textPrimary,
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
+                   
+                  
                     
                   ),
                 ),

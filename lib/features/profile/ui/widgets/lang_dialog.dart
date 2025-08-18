@@ -1,5 +1,6 @@
 // language_dialog.dart
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:market_student/core/theme/colors.dart';
 
@@ -25,8 +26,8 @@ class _LanguageDialogState extends State<LanguageDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Choose the app language',
+             Text(
+              tr('Choose the app language'),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -43,7 +44,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
                   Navigator.of(context).pop(_selectedLanguage);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal, // لون الزر
+                  backgroundColor:colors.primary, // لون الزر
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -81,7 +82,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: _selectedLanguage == language
-                      ? Colors.teal
+                      ? colors.primary
                       : Colors.grey,
                   width: 2,
                 ),
@@ -91,7 +92,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
                       child: Icon(
                         Icons.circle,
                         size: 12,
-                        color: Colors.teal,
+                        color:colors.primary,
                       ),
                     )
                   : null,

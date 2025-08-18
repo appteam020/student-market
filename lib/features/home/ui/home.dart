@@ -165,13 +165,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 24.h),
                 Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    tr("section_categories"),
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: colors.textPrimary,
-                        ),
+
+                  child: Container(
+                    width: double.infinity,
+                    child: Text(
+                      tr("section_categories"),
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colors.textPrimary,
+                          ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -219,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 12.h),
 
-                // قسم العروض المميزة باستخدام OfferCard
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -23,7 +23,6 @@ class Chats extends StatelessWidget {
         child: Column(
      
           children: [
-           // EmptyChats(), 
         ChatCard(
   avatar: CircleAvatar(
     radius: 24.r,
