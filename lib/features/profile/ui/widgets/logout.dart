@@ -3,7 +3,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({Key? key}) : super(key: key);
@@ -11,51 +13,41 @@ class LogoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      
       backgroundColor: colors.cards,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
-        padding:  EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Container(
           width: 300.w,
           child: Column(
-            
             mainAxisSize: MainAxisSize.min,
             children: [
-               Text(
-               tr('logout_dialog_title'),
+              Text(
+                tr('logout_dialog_title'),
                 textAlign: TextAlign.center,
-                style:Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: colors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: colors.textPrimary),
               ),
-               SizedBox(height: 8),
-               Text(
+              SizedBox(height: 8),
+              Text(
                 tr('logout_dialog_message'),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: colors.textSecondary
-                )
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
               ),
-               SizedBox(height: 24),
+              SizedBox(height: 24),
               Row(
                 children: [
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pop(true); // تأكيد تسجيل الخروج
+                        Supabase.instance.client.auth.signOut();
+                        context.go('/login');
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:colors.notCompleted,
+                        backgroundColor: colors.notCompleted,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
-                      child:  Text(tr('Logout'), 
-                      style: TextStyle(fontSize: 16,color: colors.cards)),
+                      child: Text(tr('Logout'), style: TextStyle(fontSize: 16, color: colors.cards)),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -66,15 +58,10 @@ class LogoutDialog extends StatelessWidget {
                       },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        side: const BorderSide(color:colors.notCompleted),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        side: const BorderSide(color: colors.notCompleted),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
-                      child:  Text(
-                       tr('cancel'),
-                        style: TextStyle(fontSize: 16, color:colors.notCompleted),
-                      ),
+                      child: Text(tr('cancel'), style: TextStyle(fontSize: 16, color: colors.notCompleted)),
                     ),
                   ),
                 ],

@@ -13,38 +13,27 @@ class Chats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.cards,
-      appBar: CustomAppBar(
-        title:tr("Chats"),
 
-        onBack: () => Navigator.pop(context),
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
-     
           children: [
-        ChatCard(
-  avatar: CircleAvatar(
-    radius: 24.r,
-    backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=1"),
-  ),
-  name: "Ahmed Ali",
-  lastMessage: " Hello, how are you?",
-  time: "min ago",
-),
+            ChatCard(
+              avatar: CircleAvatar(radius: 24.r, backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=1")),
+              name: "Ahmed Ali",
+              lastMessage: " Hello, how are you?",
+              time: "min ago",
+            ),
 
-      ChatCard(
-  avatar: CircleAvatar(
-    radius: 24.r,
-    backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=1"),
-  ),
-  name: "Sara Ahmed",
-  lastMessage: " Let's meet tomorrow",
-  time: " 2 min ago",
-),
-        
-      ] ),
+            ChatCard(
+              avatar: CircleAvatar(radius: 24.r, backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=1")),
+              name: "Sara Ahmed",
+              lastMessage: " Let's meet tomorrow",
+              time: " 2 min ago",
+            ),
+          ],
+        ),
       ),
-
     );
-  }}
+  }
+}

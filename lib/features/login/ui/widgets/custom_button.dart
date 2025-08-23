@@ -4,13 +4,9 @@ import 'package:market_student/core/theme/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
 
-  const CustomButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
+  const CustomButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +14,12 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       height: 52.h,
       child: ElevatedButton(
-       
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-        backgroundColor:colors.primary,
+          backgroundColor: colors.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         ),
-        child: Text(text, style: Theme.of(context).textTheme.labelLarge?.copyWith(
-        color: colors.background,
-        )),
+        child: Text(text, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: colors.background)),
       ),
     );
   }

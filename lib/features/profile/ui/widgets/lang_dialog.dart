@@ -12,27 +12,19 @@ class LanguageDialog extends StatefulWidget {
 }
 
 class _LanguageDialogState extends State<LanguageDialog> {
-  String _selectedLanguage = 'English'; 
+  String _selectedLanguage = 'English';
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: colors.cards,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
-              tr('Choose the app language'),
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(tr('Choose the app language'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             _buildLanguageOption('Arabic'),
             _buildLanguageOption('English'),
@@ -44,18 +36,11 @@ class _LanguageDialogState extends State<LanguageDialog> {
                   Navigator.of(context).pop(_selectedLanguage);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:colors.primary, // لون الزر
+                  backgroundColor: colors.primary, // لون الزر
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text(
-                  'Confirm',
-                  style: TextStyle(fontSize: 16,
-                  color: colors.cards
-            ),
-                ),
+                child: const Text('Confirm', style: TextStyle(fontSize: 16, color: colors.cards)),
               ),
             ),
           ],
@@ -65,10 +50,12 @@ class _LanguageDialogState extends State<LanguageDialog> {
   }
 
   Widget _buildLanguageOption(String language) {
+    String selectedLanguage = context.locale.languageCode == 'ar' ? 'Arabic' : 'English';
     return InkWell(
       onTap: () {
         setState(() {
           _selectedLanguage = language;
+          context.setLocale(Locale(language == 'Arabic' ? 'ar' : 'en'));
         });
       },
       child: Padding(
@@ -80,28 +67,14 @@ class _LanguageDialogState extends State<LanguageDialog> {
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: _selectedLanguage == language
-                      ? colors.primary
-                      : Colors.grey,
-                  width: 2,
-                ),
+                border: Border.all(color: selectedLanguage == language ? colors.primary : Colors.grey, width: 2),
               ),
-              child: _selectedLanguage == language
-                  ? const Center(
-                      child: Icon(
-                        Icons.circle,
-                        size: 12,
-                        color:colors.primary,
-                      ),
-                    )
+              child: selectedLanguage == language
+                  ? const Center(child: Icon(Icons.circle, size: 12, color: colors.primary))
                   : null,
             ),
             const SizedBox(width: 16),
-            Text(
-              language,
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text(language, style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),
