@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:market_student/core/routing/app_routing.dart';
 import 'package:market_student/features/home/controller/main_controller.dart';
-import 'package:market_student/features/profile/controller/profile_controller.dart';
+
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/theme/dark_theme.dart';
@@ -33,7 +33,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => MainProvider())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => MainProvider()..getProducts(products: "all", context: context),
+        ),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852),
         minTextAdapt: true,

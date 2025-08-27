@@ -81,12 +81,22 @@ class AddProductController extends ChangeNotifier {
     final supabase = Supabase.instance.client;
     final user = supabase.auth.currentUser;
     final List<String> imageUrls = [];
-    for (var image in images) {
-      final path = "${DateTime.now().millisecondsSinceEpoch}${image.path.split('/').last}";
-      final imagePath = await supabase.storage.from('product_images').upload(path, image);
-      final imageUrl = await supabase.storage.from('product_images').getPublicUrl(imagePath);
-      imageUrls.add(imageUrl);
+
+    try {
+      for (var image in images) {
+        final path = "${DateTime.now().millisecondsSinceEpoch}${image.path.split('/').last}";
+        final imageFile = File(image.path);
+
+        final response = await supabase.storage.from('product_images').upload(path, imageFile);
+
+        // استخدم path فقط بدون إضافة مجلد 'product_images' مرة أخرى
+        final imageUrl = await supabase.storage.from('product_images').getPublicUrl(path);
+        imageUrls.add(imageUrl);
+      }
+    } catch (e) {
+      print("Error: $e");
     }
+
     return imageUrls;
   }
 }

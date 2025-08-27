@@ -22,7 +22,9 @@ class HomeHeader extends StatelessWidget {
         builder: (context, controller, child) {
           return Row(
             children: [
-              CircleAvatar(radius: 24.r, backgroundImage: NetworkImage(controller.profile?.profileImage ?? '')),
+              controller.profileState == RequestState.loading
+                  ? CircularProgressIndicator()
+                  : CircleAvatar(radius: 24.r, backgroundImage: NetworkImage(controller.profile?.profileImage ?? '')),
               SizedBox(width: 12.w),
 
               Expanded(
