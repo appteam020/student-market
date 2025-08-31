@@ -18,7 +18,7 @@ class MyProductScreen extends StatelessWidget {
         'state': "تم البيع",
         'photo': "assets/images/books.png",
         'date': "2023-10-01",
-        'color_state': 'notCompleted'
+        'color_state': 'notCompleted',
       },
       {
         'title': "حاسوب محمول",
@@ -26,7 +26,7 @@ class MyProductScreen extends StatelessWidget {
         'state': "متاح حاليا",
         'photo': "assets/images/books.png",
         'date': "2023-10-02",
-        'color_state': 'Completed'
+        'color_state': 'Completed',
       },
       {
         'title': "هاتف ذكي",
@@ -34,7 +34,7 @@ class MyProductScreen extends StatelessWidget {
         'state': "متاح حاليا",
         'photo': "assets/images/books.png",
         'date': "2023-10-03",
-        'color_state': 'Completed'
+        'color_state': 'Completed',
       },
     ];
 
@@ -49,32 +49,23 @@ class MyProductScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final item = items[index];
               return Dismissible(
-  key: Key(item['title']!),
-  background: Container(
-    color: colors.orange,
-    alignment: AlignmentDirectional.centerStart, // تحديد الموضع إلى بداية الاتجاه
-    padding: EdgeInsetsDirectional.only(start: 24.w), // إضافة مسافة من البداية
-    child: SvgPicture.asset(
-      'assets/images/edit.svg',
-      height: 24.h,
-    ),
-  ),
-  secondaryBackground: Container(
-    color: colors.red,
-    alignment: AlignmentDirectional.centerEnd, // تحديد الموضع إلى نهاية الاتجاه
-    padding: EdgeInsetsDirectional.only(end: 24.w), // إضافة مسافة من النهاية
-    child: const Icon(
-      Icons.delete,
-      size: 32,
-      color: Colors.white,
-    ),
-  ),
-  onDismissed: (direction) {
-    if (direction == DismissDirection.startToEnd) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('تعديل: ${item['title']}')),
-      );
-    }
+                key: Key(item['title']!),
+                background: Container(
+                  color: colors.orange,
+                  alignment: AlignmentDirectional.centerStart, // تحديد الموضع إلى بداية الاتجاه
+                  padding: EdgeInsetsDirectional.only(start: 24.w), // إضافة مسافة من البداية
+                  child: SvgPicture.asset('assets/images/edit.svg', height: 24.h),
+                ),
+                secondaryBackground: Container(
+                  color: colors.red,
+                  alignment: AlignmentDirectional.centerEnd, // تحديد الموضع إلى نهاية الاتجاه
+                  padding: EdgeInsetsDirectional.only(end: 24.w), // إضافة مسافة من النهاية
+                  child: const Icon(Icons.delete, size: 32, color: Colors.white),
+                ),
+                onDismissed: (direction) {
+                  if (direction == DismissDirection.startToEnd) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('تعديل: ${item['title']}')));
+                  }
                 },
                 child: RecentTransaction(
                   title: item['title']!,

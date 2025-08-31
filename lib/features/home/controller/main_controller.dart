@@ -15,14 +15,17 @@ class MainProvider extends ChangeNotifier {
   int currentIndex = 0;
   List<ProductModel> model = [];
   RequestState productsState = RequestState.init;
-  changeProductsState(RequestState state) {
+  void changeProductsState(RequestState state) {
     productsState = state;
     notifyListeners();
   }
 
+  String productType = 'all';
   void getProducts({required String products, required BuildContext context}) async {
     changeProductsState(RequestState.loading);
-    if (products == "all") {
+    productType = products;
+    print(products);
+    if (products == "all" || products == "category_all") {
       try {
         final response = await Supabase.instance.client.from("product_table").select("*,tb_user(*)");
         print(response);
@@ -41,10 +44,7 @@ class MainProvider extends ChangeNotifier {
       }
     } else {
       try {
-        final response = await Supabase.instance.client
-            .from("product_table")
-            .select("*,tb_user(id,name)")
-            .eq("category", products);
+        final response = await Supabase.instance.client.from("product_table").select("*,tb_user(*)").eq("category", products);
         model = response.map((e) => ProductModel.fromJson(e)).toList();
         changeProductsState(RequestState.success);
       } on PostgrestException catch (e) {

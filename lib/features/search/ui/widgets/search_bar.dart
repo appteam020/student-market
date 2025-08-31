@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchBarOnly extends StatelessWidget {
   final TextEditingController controller;
@@ -9,13 +10,7 @@ class SearchBarOnly extends StatelessWidget {
   final VoidCallback? onFilterTap;
   final VoidCallback? onSearchTap;
 
-  const SearchBarOnly({
-    super.key,
-    required this.controller,
-    this.onChanged,
-    this.onFilterTap,
-    this.onSearchTap,
-  });
+  const SearchBarOnly({super.key, required this.controller, this.onChanged, this.onFilterTap, this.onSearchTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,7 @@ class SearchBarOnly extends StatelessWidget {
           child: TextField(
             controller: controller,
             onChanged: onChanged,
-            onSubmitted: (_) => onSearchTap?.call(), 
+            onSubmitted: (_) => onSearchTap?.call(),
             decoration: InputDecoration(
               hintText: tr('search'),
               prefixIcon: GestureDetector(
@@ -41,9 +36,7 @@ class SearchBarOnly extends StatelessWidget {
                   ),
                 ),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
                 borderSide: BorderSide(color: Colors.grey.shade300),
@@ -64,12 +57,20 @@ class SearchBarOnly extends StatelessWidget {
             width: 52.h,
             child: Padding(
               padding: EdgeInsets.all(12.w),
-              child: SvgPicture.asset(
-                'assets/images/filter.svg',
-                width: 24.w,
-                height: 24.h,
-                semanticsLabel: 'filter',
-              ),
+              child: SvgPicture.asset('assets/images/filter.svg', width: 24.w, height: 24.h, semanticsLabel: 'filter'),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            GoRouter.of(context).pop();
+          },
+          child: SizedBox(
+            height: 52.h,
+            width: 52.h,
+            child: Padding(
+              padding: EdgeInsets.all(12.w),
+              child: SvgPicture.asset('assets/images/Back.svg', width: 24.w, height: 24.h, semanticsLabel: 'filter'),
             ),
           ),
         ),

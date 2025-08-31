@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:market_student/core/di/get_it.dart';
+import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/theme/colors.dart';
 
 import 'package:market_student/features/dashboard/ui/widgets/recent_transaction_item.dart';
 import 'package:market_student/features/dashboard/ui/widgets/stats_card.dart';
-import 'package:easy_localization/easy_localization.dart'; // لاستدعاء tr()
+import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart'; // لاستدعاء tr()
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -31,7 +34,7 @@ class DashboardScreen extends StatelessWidget {
                   childAspectRatio: 1.2,
                   children: [
                     StatsCard(
-                      svgIcon: 'assets/images/profit.svg',
+                      svgIcon: 'assets/images/profile.svg',
                       title: tr('total_profit'),
                       count: "1258 شيكل",
                       backgroundColor: colors.secondary.withOpacity(0.2),
@@ -51,11 +54,18 @@ class DashboardScreen extends StatelessWidget {
                         context.push('/my_product_screen');
                       },
                     ),
-                    StatsCard(
-                      svgIcon: 'assets/images/likes.svg',
-                      title: tr('likes'),
-                      count: "25",
-                      backgroundColor: colors.red.withOpacity(0.2),
+                    ChangeNotifierProvider.value(
+                      value: getIt<FavoritesController>(),
+                      child: Consumer<FavoritesController>(
+                        builder: (context, provider, child) {
+                          return StatsCard(
+                            svgIcon: 'assets/images/likes.svg',
+                            title: tr('likes'),
+                            count: provider.isLoading ? "0" : provider.favoriteProductIds.length.toString(),
+                            backgroundColor: colors.red.withOpacity(0.2),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

@@ -29,13 +29,7 @@ class OfferCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 4,
-              offset: const Offset(2, 2,),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(2, 2))],
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +38,14 @@ class OfferCard extends StatelessWidget {
             // صورة المنتج
             ClipRRect(
               borderRadius: BorderRadius.circular(8.r),
-              child: Image.asset(
+              child: Image.network(
                 imagePath,
                 height: 80.h,
                 width: 80.w,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error);
+                },
               ),
             ),
             SizedBox(width: 12.w),
@@ -60,27 +57,17 @@ class OfferCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     price,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.green, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 2.h),
-                  Text(
-                    seller,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: colors.textSecondary,
-                        ),
-                  ),
+                  Text(seller, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colors.textSecondary)),
                 ],
               ),
             ),

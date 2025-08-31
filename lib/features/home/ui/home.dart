@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:market_student/core/di/get_it.dart';
+import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/features/add%20product/ui/upload_product_screen.dart';
 import 'package:market_student/features/chats/ui/chats.dart';
 import 'package:market_student/features/dashboard/ui/dashboard.dart';
 import 'package:market_student/features/home/controller/main_controller.dart';
 import 'package:market_student/features/home/model/product_model.dart';
+import 'package:market_student/features/home/ui/build_small_product_item.dart';
 import 'package:market_student/features/home/ui/widgets/bottom_nav.dart';
 import 'package:market_student/features/profile/ui/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -36,91 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _selectedCategory = 0;
 
-  final List<Map<String, String>> _products = List.generate(
-    8,
-    (i) => {
-      'title_key': 'product_media_law_book',
-      'price_key': 'product_price_example',
-      'seller_key': 'user_name',
-      'image': 'assets/images/product.png',
-    },
-  );
-
-  final Set<int> _favoriteIndices = {};
-
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
-  }
-
-  Widget _buildSmallProductCard(int index, ProductModel product) {
-    final isFav = _favoriteIndices.contains(index);
-    return GestureDetector(
-      onTap: () {
-        print(product.user!.fullName);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6, offset: const Offset(0, 3))],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
-              child: Image.network(product.image![0], height: 150.h, width: double.infinity, fit: BoxFit.cover),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.name!,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    "البائع :${product.user?.fullName}",
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colors.primary),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${product.price} ${tr('product_price_dollar')}",
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colors.red, fontWeight: FontWeight.bold),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (isFav) {
-                              _favoriteIndices.remove(index);
-                            } else {
-                              _favoriteIndices.add(index);
-                            }
-                          });
-                        },
-                        child: Icon(
-                          isFav ? Icons.favorite : Icons.favorite_border,
-                          color: isFav ? Colors.red : colors.textSecondary,
-                          size: 18.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -142,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onNotifications: () => context.push('/notifications'),
                 ),
                 SizedBox(height: 24.h),
-                SearchFilterBar(controller: _searchController, onFilterTap: () {}, onChanged: (q) {}),
+                SearchFilterBar(onFilterTap: () {}, onChanged: (q) {}),
                 SizedBox(height: 24.h),
                 Align(
                   child: Container(
@@ -156,22 +78,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 12.h),
-                SizedBox(
-                  height: 90.h,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _categories.length,
-                    separatorBuilder: (_, __) => SizedBox(width: 18.w),
-                    itemBuilder: (context, index) {
-                      final cat = _categories[index];
-                      return CategoryChip(
-                        svgAsset: cat['svg']!,
-                        title: tr(cat['title']!),
-                        selected: index == _selectedCategory,
-                        onTap: () => setState(() => _selectedCategory = index),
-                      );
-                    },
-                  ),
+                Consumer<MainProvider>(
+                  builder: (context, value, child) {
+                    return SizedBox(
+                      height: 90.h,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _categories.length,
+                        separatorBuilder: (_, __) => SizedBox(width: 18.w),
+                        itemBuilder: (context, index) {
+                          final cat = _categories[index];
+                          return CategoryChip(
+                            svgAsset: cat['svg']!,
+                            title: tr(cat['title']!),
+                            selected: index == _selectedCategory,
+                            onTap: () {
+                              _selectedCategory = index;
+                              setState(() {});
+                              value.getProducts(products: cat['title']!, context: context);
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: 12.h),
                 Container(
@@ -213,22 +143,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
-                SizedBox(
-                  height: 100.h,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _products.length,
-                    separatorBuilder: (_, __) => SizedBox(width: 12.w),
-                    itemBuilder: (context, index) {
-                      final product = _products[index];
-                      final isFav = _favoriteIndices.contains(index);
-                      return OfferCard(
-                        imagePath: product['image']!,
-                        title: tr(product['title_key']!),
-                        price: tr(product['price_key']!),
+                ChangeNotifierProvider.value(
+                  value: getIt<MainProvider>(),
+                  child: Consumer<MainProvider>(
+                    builder: (context, value, child) {
+                      return SizedBox(
+                        height: 100.h,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: value.model.length,
+                          separatorBuilder: (_, __) => SizedBox(width: 12.w),
+                          itemBuilder: (context, index) {
+                            final product = value.model[index];
+                            //  final isFav = _favoriteIndices.contains(index);
+                            return OfferCard(
+                              imagePath: product.image![0],
+                              title: product.name.toString(),
+                              price: product.price.toString(),
 
-                        seller: tr(product['seller_key']!),
-                        onTap: () {},
+                              seller: product.user!.fullName.toString(),
+                              onTap: () {
+                                GoRouter.of(context).push("/product_details", extra: product);
+                              },
+                            );
+                          },
+                        ),
                       );
                     },
                   ),
@@ -256,20 +195,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 12.h),
                 Consumer<MainProvider>(
                   builder: (context, provider, child) {
-                    return GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: provider.model.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 22.h,
-                        crossAxisSpacing: 22.w,
-                        childAspectRatio: 0.58,
-                      ),
-                      itemBuilder: (context, index) {
-                        return _buildSmallProductCard(index, provider.model[index]);
-                      },
-                    );
+                    switch (provider.productsState) {
+                      case RequestState.init:
+                      case RequestState.loading:
+                        return Center(child: CircularProgressIndicator());
+                      case RequestState.success:
+                        return GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: provider.model.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 22.h,
+                            crossAxisSpacing: 22.w,
+                            childAspectRatio: 0.58,
+                          ),
+                          itemBuilder: (context, index) {
+                            return BuildSmallProductItem(product: provider.model[index]);
+                          },
+                        );
+                      case RequestState.error:
+                        return Column(
+                          children: [
+                            Icon(Icons.error),
+                            SizedBox(height: 12),
+                            Text("Some Error"),
+                            SizedBox(height: 8),
+                            ElevatedButton(
+                              onPressed: () {
+                                provider.getProducts(products: "all", context: context);
+                              },
+                              child: Text("Try Again"),
+                            ),
+                          ],
+                        );
+                    }
                   },
                 ),
                 SizedBox(height: 12.h),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:market_student/core/di/get_it.dart';
+import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/routing/app_routing.dart';
 import 'package:market_student/features/home/controller/main_controller.dart';
 
@@ -12,6 +14,7 @@ import 'core/theme/light_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  setup();
   await Supabase.initialize(
     url: 'https://vhemxggjxvdpyfcuirsv.supabase.co',
     anonKey:
@@ -32,26 +35,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => MainProvider()..getProducts(products: "all", context: context),
-        ),
-      ],
-      child: ScreenUtilInit(
-        designSize: const Size(393, 852),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) => MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: router,
-          locale: context.locale,
-          supportedLocales: context.supportedLocales,
-          localizationsDelegates: context.localizationDelegates,
-          theme: LightAppTheme.themeData,
-          darkTheme: DarkAppTheme.themeData,
-          themeMode: ThemeMode.light,
-        ),
+    return ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        theme: LightAppTheme.themeData,
+        darkTheme: DarkAppTheme.themeData,
+        themeMode: ThemeMode.light,
       ),
     );
   }

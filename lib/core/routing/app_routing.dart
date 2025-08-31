@@ -9,6 +9,7 @@ import 'package:market_student/features/forget%20password/ui/forget_password.dar
 import 'package:market_student/features/forget%20password/ui/otp.dart';
 import 'package:market_student/features/forget%20password/ui/reset_password.dart';
 import 'package:market_student/features/help%20center/ui/help_center.dart';
+import 'package:market_student/features/home/model/product_model.dart';
 import 'package:market_student/features/home/ui/home.dart';
 import 'package:market_student/features/home/ui/widgets/main_nav.dart';
 import 'package:market_student/features/inital/initial_screen.dart';
@@ -47,7 +48,13 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
-    GoRoute(path: '/product_details', builder: (context, state) => ProductDetails()),
+    GoRoute(
+      path: '/product_details',
+      builder: (context, state) {
+        final model = state.extra as ProductModel;
+        return ProductDetails(productModel: model);
+      },
+    ),
     // Assuming OTP screen is similar
     GoRoute(path: '/notifications', builder: (context, state) => NotificationScreen()),
 
