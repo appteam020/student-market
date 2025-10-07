@@ -133,18 +133,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                       },
                     ),
                     SizedBox(height: 16.h),
-                    CustomTextField(
-                      label: tr("product_quantity"),
-                      hint: tr("enter_product_quantity"),
-                      controller: controller.productQuantityController,
-                      type: 'price',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return tr("product_quantity_required");
-                        }
-                        return null;
-                      },
-                    ),
+
                     SizedBox(height: 16.h),
                     Text(
                       tr("section_categories"),

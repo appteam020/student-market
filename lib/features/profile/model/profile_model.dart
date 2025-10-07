@@ -12,7 +12,7 @@ class ProfileModel {
       fullName: json['full_name'] ?? "",
       email: json['email'] ?? "",
       createdAt: json['created_at'] ?? "",
-      token: json['token'] ?? "",
+      token: json['user_id'] ?? "",
       profileImage: json['image'] ?? "",
     );
   }

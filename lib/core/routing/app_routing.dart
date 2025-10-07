@@ -64,7 +64,13 @@ final GoRouter router = GoRouter(
 
     GoRoute(path: '/dashboard', builder: (context, state) => DashboardScreen()),
 
-    GoRoute(path: '/my_product_screen', builder: (context, state) => MyProductScreen()),
+    GoRoute(
+      path: '/my_product_screen',
+      builder: (context, state) {
+        final products = state.extra as List<ProductModel>;
+        return MyProductScreen(products: products);
+      },
+    ),
 
     GoRoute(path: '/add_product', builder: (context, state) => UploadProductScreen()),
 

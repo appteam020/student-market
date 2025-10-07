@@ -5,8 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market_student/core/di/get_it.dart';
 import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/chats/chat_screen/chat_screen.dart';
+import 'package:market_student/features/chats/controller/chat_provider.dart';
 import 'package:market_student/features/home/model/product_model.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProductDetails extends StatefulWidget {
   ProductDetails({super.key, required this.productModel});
@@ -189,17 +192,41 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                     Row(
                       children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: colors.primary,
-                              padding: EdgeInsets.symmetric(vertical: 12.h),
+                        if (widget.productModel.user!.token.toString() != Supabase.instance.client.auth.currentUser!.id)
+                          Expanded(
+                            child: ChangeNotifierProvider(
+                              create: (context) => ChatsProvider(),
+                              child: Consumer<ChatsProvider>(
+                                builder: (context, value, child) {
+                                  return ElevatedButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatScreen(
+                                            partnerId: widget.productModel.user!.token!,
+                                            partnerName: widget.productModel.user?.fullName ?? "",
+                                            chatProvider: value,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: colors.primary,
+                                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                                    ),
+                                    icon: SvgPicture.asset(
+                                      'assets/images/chat.svg',
+                                      height: 20.h,
+                                      width: 20.w,
+                                      color: Colors.white,
+                                    ),
+                                    label: Text(tr("Contact_the_seller"), style: TextStyle(color: Colors.white)),
+                                  );
+                                },
+                              ),
                             ),
-                            icon: SvgPicture.asset('assets/images/chat.svg', height: 20.h, width: 20.w, color: Colors.white),
-                            label: Text(tr("Contact_the_seller"), style: TextStyle(color: Colors.white)),
                           ),
-                        ),
                         SizedBox(width: 12.w),
                         Expanded(
                           child: OutlinedButton.icon(

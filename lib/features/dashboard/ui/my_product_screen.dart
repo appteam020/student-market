@@ -5,75 +5,44 @@ import 'package:flutter_svg/flutter_svg.dart'; // تأكد من استيراد �
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/features/dashboard/ui/widgets/header.dart';
 import 'package:market_student/features/dashboard/ui/widgets/recent_transaction_item.dart';
+import 'package:market_student/features/home/model/product_model.dart';
 
 class MyProductScreen extends StatelessWidget {
-  const MyProductScreen({super.key});
-
+  const MyProductScreen({super.key, required this.products});
+  final List<ProductModel> products;
   @override
   Widget build(BuildContext context) {
-    final items = [
-      {
-        'title': "كتاب العلوم و الدين",
-        'price': "152 شيكل",
-        'state': "تم البيع",
-        'photo': "assets/images/books.png",
-        'date': "2023-10-01",
-        'color_state': 'notCompleted',
-      },
-      {
-        'title': "حاسوب محمول",
-        'price': "2500 شيكل",
-        'state': "متاح حاليا",
-        'photo': "assets/images/books.png",
-        'date': "2023-10-02",
-        'color_state': 'Completed',
-      },
-      {
-        'title': "هاتف ذكي",
-        'price': "1200 شيكل",
-        'state': "متاح حاليا",
-        'photo': "assets/images/books.png",
-        'date': "2023-10-03",
-        'color_state': 'Completed',
-      },
-    ];
-
     return SafeArea(
       child: Scaffold(
-        appBar: DashboardHeader(title: tr('My_Products')),
+        appBar: AppBar(automaticallyImplyLeading: true, title: Text(tr('my_products')), foregroundColor: colors.textPrimary),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ListView.separated(
-            itemCount: items.length,
+            itemCount: products.length,
             separatorBuilder: (_, __) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
-              final item = items[index];
+              final item = products[index];
               return Dismissible(
-                key: Key(item['title']!),
+                key: Key(item.name!),
                 background: Container(
-                  color: colors.orange,
-                  alignment: AlignmentDirectional.centerStart, // تحديد الموضع إلى بداية الاتجاه
-                  padding: EdgeInsetsDirectional.only(start: 24.w), // إضافة مسافة من البداية
-                  child: SvgPicture.asset('assets/images/edit.svg', height: 24.h),
-                ),
-                secondaryBackground: Container(
                   color: colors.red,
                   alignment: AlignmentDirectional.centerEnd, // تحديد الموضع إلى نهاية الاتجاه
                   padding: EdgeInsetsDirectional.only(end: 24.w), // إضافة مسافة من النهاية
                   child: const Icon(Icons.delete, size: 32, color: Colors.white),
                 ),
+
                 onDismissed: (direction) {
                   if (direction == DismissDirection.startToEnd) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('تعديل: ${item['title']}')));
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('تعديل: ${item['title']}')));
                   }
                 },
                 child: RecentTransaction(
-                  title: item['title']!,
-                  price: item['price']!,
-                  state: item['state']!,
-                  photo: item['photo']!,
-                  date: item['date']!,
-                  color_state: item['color_state']!,
+                  title: item.name!,
+                  price: item.price!.toString(),
+                  state: item.status!,
+                  photo: item.image![0],
+                  date: item.createdAt!.toString(),
+                  color_state: item.status!,
                 ),
               );
             },

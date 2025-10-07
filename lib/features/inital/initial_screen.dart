@@ -16,30 +16,26 @@ class InitialScreen extends StatefulWidget {
 class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => ProfileController()..getProfile())],
-      child: StreamBuilder(
-        stream: Supabase.instance.client.auth.onAuthStateChange,
-        builder: (context, snapshot) {
-          print(snapshot.error);
-          print(snapshot.connectionState);
-          print(snapshot.data?.session);
-
-          if (snapshot.hasError) {
-            return const LoginScreen();
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.data?.session == null) {
-            return const LoginScreen();
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            return const LoginScreen();
-          } else if (snapshot.connectionState == ConnectionState.none) {
-            return const LoginScreen();
-          } else {
-            return MainNavigation(child: const HomeScreen());
-          }
-        },
-      ),
+    return StreamBuilder(
+      stream: Supabase.instance.client.auth.onAuthStateChange,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const LoginScreen();
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.data?.session == null) {
+          return const LoginScreen();
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          return const LoginScreen();
+        } else if (snapshot.connectionState == ConnectionState.none) {
+          return const LoginScreen();
+        } else {
+          return ChangeNotifierProvider(
+            create: (context) => ProfileController()..getProfile(),
+            child: MainNavigation(child: const HomeScreen()),
+          );
+        }
+      },
     );
   }
 }

@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   dotted_border: ^3.1.0
-  easy_localization: ^3.0.7+1
+  easy_localization: any
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
@@ -19,6 +19,9 @@ dependencies:
   supabase_flutter: ^2.9.1
   image_picker: ^1.1.2
   get_it: 
+  get_time_ago: 
+  dash_chat_3: any
+  intl: any
 
 dev_dependencies:
   flutter_lints: ^6.0.0

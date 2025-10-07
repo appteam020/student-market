@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_student/core/di/get_it.dart';
+import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/dashboard/controller/dashboard_controller.dart';
 
 import 'package:market_student/features/dashboard/ui/widgets/recent_transaction_item.dart';
 import 'package:market_student/features/dashboard/ui/widgets/stats_card.dart';
@@ -45,14 +47,28 @@ class DashboardScreen extends StatelessWidget {
                       count: "12",
                       backgroundColor: colors.primary.withOpacity(0.2),
                     ),
-                    StatsCard(
-                      svgIcon: 'assets/images/tag.svg',
-                      title: tr('my_products'),
-                      count: "2",
-                      backgroundColor: colors.orange.withOpacity(0.2),
-                      onTap: () {
-                        context.push('/my_product_screen');
-                      },
+                    ChangeNotifierProvider(
+                      create: (context) => DashboardController()..getMyCurrentPdoucts(),
+                      child: Consumer<DashboardController>(
+                        builder: (context, provider, child) {
+                          return GestureDetector(
+                            onTap: () {
+                              GoRouter.of(context).push('/my_product_screen', extra: provider.myCurrentProducts);
+                            },
+                            child: StatsCard(
+                              svgIcon: 'assets/images/tag.svg',
+                              title: tr('my_products'),
+                              count: provider.myCurrentProductsState == RequestState.loading
+                                  ? "Loading..."
+                                  : provider.myCurrentProducts.length.toString(),
+                              backgroundColor: colors.orange.withOpacity(0.2),
+                              onTap: () {
+                                context.push('/my_product_screen', extra: provider.myCurrentProducts);
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     ChangeNotifierProvider.value(
                       value: getIt<FavoritesController>(),
