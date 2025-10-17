@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:market_student/core/di/get_it.dart';
 import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/features/profile/controller/profile_controller.dart';
@@ -12,18 +14,9 @@ class ProfileHeader extends StatelessWidget {
 
   final String name;
   final String email;
-  final Function()? onEdit;
+  final void Function()? onEdit;
 
-  final ProfileController controller;
-
-  const ProfileHeader({
-    super.key,
-    required this.imageUrl,
-    required this.name,
-    required this.email,
-    required this.onEdit,
-    required this.controller,
-  });
+  const ProfileHeader({super.key, required this.imageUrl, required this.name, required this.email, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +42,14 @@ class ProfileHeader extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (context) => ChangeNotifierProvider.value(
-                        value: controller,
+                        value: getIt<ProfileController>(),
                         child: Consumer<ProfileController>(
                           builder: (context, controller, child) {
                             return AlertDialog(
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('تعديل الصورة الشخصية'),
+                                  Text(tr('Edit_profile_image')),
                                   SizedBox(height: 16.h),
                                   CircleAvatar(
                                     radius: 60.r,
@@ -96,7 +89,7 @@ class ProfileHeader extends StatelessWidget {
                                                 onPressed: () {
                                                   controller.updateProfileImage(context);
                                                 },
-                                                child: Text('تعديل الصورة الشخصية'),
+                                                child: Text(tr('Edit_profile_image')),
                                               )
                                       : const SizedBox.shrink(),
                                 ],
@@ -136,7 +129,7 @@ class ProfileHeader extends StatelessWidget {
               children: [
                 SvgPicture.asset('assets/images/edit.svg', width: 20.w, height: 20.h, color: colors.primary),
                 SizedBox(width: 8.w),
-                Text("تعديل الملف الشخصي", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.primary)),
+                Text(tr('edit_profile'), style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.primary)),
               ],
             ),
           ),

@@ -17,7 +17,7 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          partnerName,
+          "${tr("chat_with")} $partnerName",
           style: Theme.of(context).textTheme.titleLarge?.copyWith(color: colors.textPrimary, fontWeight: FontWeight.bold),
         ),
         backgroundColor: colors.primary,

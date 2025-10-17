@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({super.key, required this.provider});
-  final SearchProdvider provider;
+  final SearchProvider provider;
   @override
   Widget build(BuildContext context) {
     bool isArabic = context.locale.languageCode == 'ar';
 
     return ChangeNotifierProvider.value(
       value: provider,
-      child: Consumer<SearchProdvider>(
+      child: Consumer<SearchProvider>(
         builder: (context, provider, child) {
           return Padding(
             padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h, bottom: MediaQuery.of(context).viewInsets.bottom + 16.h),
@@ -84,8 +84,8 @@ class FilterBottomSheet extends StatelessWidget {
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.grey.shade300,
                   values: provider.priceRange,
-                  min: 5,
-                  max: 500,
+                  min: 0,
+                  max: 1000,
                   divisions: 100,
                   labels: RangeLabels("\$${provider.priceRange.start.round()}", "\$${provider.priceRange.end.round()}"),
                   onChanged: (RangeValues values) {
@@ -100,7 +100,10 @@ class FilterBottomSheet extends StatelessWidget {
                     minimumSize: Size(double.infinity, 48.h),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    provider.getProducts();
+                    Navigator.of(context).pop();
+                  },
                   child: Text(
                     "view_results".tr(args: [provider.resultsCount.toString()]),
                     style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -115,7 +118,7 @@ class FilterBottomSheet extends StatelessWidget {
   }
 
   Widget _buildRadio(String label) {
-    return Consumer<SearchProdvider>(
+    return Consumer<SearchProvider>(
       builder: (context, provider, child) {
         return RadioListTile<String>(
           contentPadding: EdgeInsets.zero,

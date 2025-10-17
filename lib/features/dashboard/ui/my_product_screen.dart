@@ -36,14 +36,7 @@ class MyProductScreen extends StatelessWidget {
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('تعديل: ${item['title']}')));
                   }
                 },
-                child: RecentTransaction(
-                  title: item.name!,
-                  price: item.price!.toString(),
-                  state: item.status!,
-                  photo: item.image![0],
-                  date: item.createdAt!.toString(),
-                  color_state: item.status!,
-                ),
+                child: RecentTransaction(product: item),
               );
             },
           ),

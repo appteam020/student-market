@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_student/core/eunm/request_state.dart';
@@ -27,7 +28,7 @@ class ChangePasswordProvider extends ChangeNotifier {
     final confirmPassword = confirmPasswordController.text;
 
     if (newPassword != confirmPassword) {
-      errorMessage = "كلمات المرور غير متطابقة";
+      errorMessage = tr('passwords_do_not_match');
       customSnackBar(context, errorMessage, colors.red);
       stateManagement(RequestState.error);
       return;
@@ -38,7 +39,7 @@ class ChangePasswordProvider extends ChangeNotifier {
       final response = await Supabase.instance.client.auth.signInWithPassword(email: user!.email!, password: oldPassword);
 
       if (response.user == null) {
-        errorMessage = "كلمة المرور القديمة غير صحيحة";
+        errorMessage = tr('old_password_is_incorrect');
         customSnackBar(context, errorMessage, colors.red);
         stateManagement(RequestState.error);
         return;
@@ -47,7 +48,7 @@ class ChangePasswordProvider extends ChangeNotifier {
       // تحديث كلمة المرور
       await Supabase.instance.client.auth.updateUser(UserAttributes(password: newPassword));
 
-      customSnackBar(context, 'تم تغيير كلمة المرور بنجاح', colors.primary);
+      customSnackBar(context, tr('password_changed_successfully'), colors.primary);
       stateManagement(RequestState.success);
       await Supabase.instance.client.auth.signOut();
       context.go('/login');

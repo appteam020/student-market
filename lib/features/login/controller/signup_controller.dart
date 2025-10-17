@@ -36,7 +36,7 @@ class SignUpProvider extends ChangeNotifier {
             'email': emailController.text,
             'user_id': response.user!.id,
           });
-          customSnackBar(context, 'تم التسجيل بنجاح', colors.Completed);
+          customSnackBar(context, tr('signup_successfully'), colors.Completed);
           context.pop();
           changeRequestState(RequestState.success); // عند النجاح
         } else {
@@ -45,19 +45,19 @@ class SignUpProvider extends ChangeNotifier {
         }
       } on AuthException catch (e) {
         errorMessage = e.message;
-        customSnackBar(context, e.message, colors.red);
+        customSnackBar(context, tr('signup_error'), colors.red);
         changeRequestState(RequestState.error);
       } on PostgrestException catch (e) {
         errorMessage = e.message;
-        customSnackBar(context, e.message, colors.red);
+        customSnackBar(context, tr('signup_error'), colors.red);
         changeRequestState(RequestState.error);
       } on Exception catch (e) {
         errorMessage = e.toString();
-        customSnackBar(context, errorMessage, colors.red);
+        customSnackBar(context, tr('signup_error'), colors.red);
         changeRequestState(RequestState.error);
       } catch (e) {
         errorMessage = e.toString();
-        customSnackBar(context, errorMessage, colors.red);
+        customSnackBar(context, tr('signup_error'), colors.red);
         changeRequestState(RequestState.error);
       }
     }

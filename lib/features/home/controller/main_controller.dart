@@ -48,11 +48,11 @@ class MainProvider extends ChangeNotifier {
         model = response.map((e) => ProductModel.fromJson(e)).toList();
         changeProductsState(RequestState.success);
       } on PostgrestException catch (e) {
-        customSnackBar(context, e.message, Colors.red);
+        customSnackBar(context, tr('failed_to_get_products'), Colors.red);
         changeProductsState(RequestState.error);
         print(e);
       } catch (e) {
-        customSnackBar(context, e.toString(), Colors.red);
+        customSnackBar(context, tr('failed_to_get_products'), Colors.red);
         changeProductsState(RequestState.error);
       }
     }

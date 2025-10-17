@@ -78,30 +78,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 12.h),
-                Consumer<MainProvider>(
-                  builder: (context, value, child) {
-                    return SizedBox(
-                      height: 90.h,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _categories.length,
-                        separatorBuilder: (_, __) => SizedBox(width: 18.w),
-                        itemBuilder: (context, index) {
-                          final cat = _categories[index];
-                          return CategoryChip(
-                            svgAsset: cat['svg']!,
-                            title: tr(cat['title']!),
-                            selected: index == _selectedCategory,
-                            onTap: () {
-                              _selectedCategory = index;
-                              setState(() {});
-                              value.getProducts(products: cat['title']!, context: context);
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  },
+                ChangeNotifierProvider.value(
+                  value: getIt<MainProvider>(),
+                  child: Consumer<MainProvider>(
+                    builder: (context, value, child) {
+                      return SizedBox(
+                        height: 90.h,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _categories.length,
+                          separatorBuilder: (_, __) => SizedBox(width: 18.w),
+                          itemBuilder: (context, index) {
+                            final cat = _categories[index];
+                            return CategoryChip(
+                              svgAsset: cat['svg']!,
+                              title: tr(cat['title']!),
+                              selected: index == _selectedCategory,
+                              onTap: () {
+                                _selectedCategory = index;
+                                setState(() {});
+                                value.getProducts(products: cat['title']!, context: context);
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(height: 12.h),
                 Container(
@@ -134,7 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        GoRouter.of(context).push("/featured_offers");
+                      },
                       child: Text(
                         tr('action_view_all'),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
@@ -156,16 +161,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) {
                             final product = value.model[index];
                             //  final isFav = _favoriteIndices.contains(index);
-                            return OfferCard(
-                              imagePath: product.image![0],
-                              title: product.name.toString(),
-                              price: product.price.toString(),
+                            if (product.isSold == true) {
+                              return SizedBox();
+                            } else {
+                              return OfferCard(
+                                imagePath: product.image![0],
+                                title: product.name.toString(),
+                                price: product.price.toString(),
 
-                              seller: product.user!.fullName.toString(),
-                              onTap: () {
-                                GoRouter.of(context).push("/product_details", extra: product);
-                              },
-                            );
+                                seller: product.user!.fullName.toString(),
+                                onTap: () {
+                                  GoRouter.of(context).push("/product_details", extra: product);
+                                },
+                              );
+                            }
                           },
                         ),
                       );
@@ -193,44 +202,55 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 SizedBox(height: 12.h),
-                Consumer<MainProvider>(
-                  builder: (context, provider, child) {
-                    switch (provider.productsState) {
-                      case RequestState.init:
-                      case RequestState.loading:
-                        return Center(child: CircularProgressIndicator());
-                      case RequestState.success:
-                        return GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: provider.model.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 22.h,
-                            crossAxisSpacing: 22.w,
-                            childAspectRatio: 0.58,
-                          ),
-                          itemBuilder: (context, index) {
-                            return BuildSmallProductItem(product: provider.model[index]);
-                          },
-                        );
-                      case RequestState.error:
-                        return Column(
-                          children: [
-                            Icon(Icons.error),
-                            SizedBox(height: 12),
-                            Text("Some Error"),
-                            SizedBox(height: 8),
-                            ElevatedButton(
-                              onPressed: () {
-                                provider.getProducts(products: "all", context: context);
-                              },
-                              child: Text("Try Again"),
+                ChangeNotifierProvider.value(
+                  value: getIt<MainProvider>(),
+                  child: Consumer<MainProvider>(
+                    builder: (context, provider, child) {
+                      switch (provider.productsState) {
+                        case RequestState.init:
+                        case RequestState.loading:
+                          return Center(child: CircularProgressIndicator());
+                        case RequestState.success:
+                          return GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: provider.model.length,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 22.h,
+                              crossAxisSpacing: 22.w,
+                              childAspectRatio: 0.58,
                             ),
-                          ],
-                        );
-                    }
-                  },
+                            itemBuilder: (context, index) {
+                              if (provider.model[index].isSold == true) {
+                                return Banner(
+                                  message: "Sold",
+                                  location: BannerLocation.topStart,
+                                  child: BuildSmallProductItem(product: provider.model[index]),
+                                );
+                              } else {
+                                return BuildSmallProductItem(product: provider.model[index]);
+                              }
+                            },
+                          );
+                        case RequestState.error:
+                          return Column(
+                            children: [
+                              Icon(Icons.error),
+                              SizedBox(height: 12),
+                              Text("Some Error"),
+                              SizedBox(height: 8),
+                              ElevatedButton(
+                                onPressed: () {
+                                  provider.getProducts(products: "all", context: context);
+                                },
+                                child: Text("Try Again"),
+                              ),
+                            ],
+                          );
+                      }
+                    },
+                  ),
                 ),
                 SizedBox(height: 12.h),
               ],

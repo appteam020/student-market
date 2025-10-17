@@ -13,8 +13,8 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SearchProdvider(),
-      child: Consumer<SearchProdvider>(
+      create: (context) => SearchProvider(),
+      child: Consumer<SearchProvider>(
         builder: (context, provider, child) {
           return SafeArea(
             child: Scaffold(
@@ -56,6 +56,13 @@ class SearchScreen extends StatelessWidget {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.70),
                         itemBuilder: (context, index) {
                           final product = provider.products[index];
+                          if (product.isSold == true) {
+                            return Banner(
+                              message: 'sold'.tr(),
+                              location: BannerLocation.topStart,
+                              child: SearchProductCard(model: product, onFavoriteTap: () {}, onTap: () {}),
+                            );
+                          }
                           return SizedBox(
                             height: 200.h,
                             child: SearchProductCard(model: product, onFavoriteTap: () {}, onTap: () {}),

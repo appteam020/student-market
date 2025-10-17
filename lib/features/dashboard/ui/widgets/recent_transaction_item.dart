@@ -1,25 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/home/model/product_model.dart';
 
 class RecentTransaction extends StatelessWidget {
-  final String photo;
-  final String title;
-  final String date;
-  final String price;
-  final String state;
-  final String color_state;
+  final ProductModel product;
 
-  const RecentTransaction({
-    super.key,
-    required this.photo,
-    required this.title,
-    required this.date,
-    required this.price,
-    required this.state,
-    required this.color_state,
-  });
+  const RecentTransaction({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +23,7 @@ class RecentTransaction extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(photo, width: 85.w, height: 85.h, fit: BoxFit.cover),
+          CachedNetworkImage(imageUrl: product.image![0], width: 85.w, height: 85.h, fit: BoxFit.cover),
           SizedBox(width: 12.w),
 
           Expanded(
@@ -42,13 +31,13 @@ class RecentTransaction extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  title,
+                  product.name ?? "",
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
                 ),
                 SizedBox(height: 24.h),
 
                 Text(
-                  DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(date)),
+                  DateFormat('yyyy-MM-dd HH:mm').format(DateTime.tryParse(product.createdAt.toString()) ?? DateTime.now()),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
                 ),
               ],
@@ -60,7 +49,7 @@ class RecentTransaction extends StatelessWidget {
 
             children: [
               Text(
-                "${price} ${tr('product_price_dollar')}",
+                "${product.price} ${tr('product_price_dollar')}",
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.primary, fontWeight: FontWeight.bold),
               ),
 
@@ -68,12 +57,12 @@ class RecentTransaction extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                 decoration: BoxDecoration(
-                  color: color_state == 'Completed' ? colors.Completed : colors.notCompleted,
+                  color: product.isSold == true ? colors.Completed : colors.notCompleted,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  state,
+                  product.isSold == true ? tr('completed') : tr('not_completed'),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: colors.textPrimary, fontWeight: FontWeight.bold),
                 ),

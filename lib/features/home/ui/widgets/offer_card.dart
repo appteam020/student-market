@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:market_student/core/theme/colors.dart';
@@ -38,12 +39,12 @@ class OfferCard extends StatelessWidget {
             // صورة المنتج
             ClipRRect(
               borderRadius: BorderRadius.circular(8.r),
-              child: Image.network(
-                imagePath,
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
                 height: 80.h,
                 width: 80.w,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
+                errorWidget: (context, error, stackTrace) {
                   return Icon(Icons.error);
                 },
               ),

@@ -8,6 +8,7 @@ class ProductModel {
   final String? description;
   final DateTime? createdAt;
   final String? category;
+  final bool? isSold;
 
   final ProfileModel? user;
   final String? status;
@@ -24,11 +25,12 @@ class ProductModel {
     this.user,
     this.createdAt,
     this.status,
+    this.isSold,
   });
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
     id: json['id'],
     name: json['name'],
-    price: int.parse(json['price']),
+    price: json['price'],
     image: json['images'] as List<dynamic>,
     description: json['description'],
 
@@ -37,5 +39,6 @@ class ProductModel {
     user: ProfileModel().fromJson(json['tb_user']),
     createdAt: DateTime.parse(json['created_at']),
     status: json['status'],
+    isSold: json['is_sold'],
   );
 }

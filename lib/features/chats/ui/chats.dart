@@ -29,6 +29,9 @@ class Chats extends StatelessWidget {
               return ListView.separated(
                 itemBuilder: (context, index) {
                   final conversation = value.conversations[index];
+                  if (value.conversations.isEmpty) {
+                    return EmptyChats();
+                  }
                   return ChatCard(
                     onTap: () {
                       Navigator.push(

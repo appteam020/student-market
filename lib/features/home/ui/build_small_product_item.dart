@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/favorites_page/controller/favorites_provider.dart';
 import 'package:market_student/features/home/model/product_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +31,15 @@ class BuildSmallProductItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(12.r), topRight: Radius.circular(12.r)),
-              child: Image.network(product.image![0], height: 150.h, width: double.infinity, fit: BoxFit.cover),
+              child: CachedNetworkImage(
+                imageUrl: product.image![0],
+                height: 150.h,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.error);
+                },
+              ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
@@ -44,7 +54,7 @@ class BuildSmallProductItem extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "البائع :${product.user?.fullName}",
+                    "${tr('seller')} :${product.user?.fullName}",
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colors.primary),
                   ),
                   Row(
@@ -67,10 +77,11 @@ class BuildSmallProductItem extends StatelessWidget {
                                 } else {
                                   provider.addFavorite(product.id!);
                                 }
+                                getIt<FavoritesProvider>().getFavorites();
                               },
                               child: Icon(
                                 provider.isFavorite(product.id!) ? Icons.favorite : Icons.favorite_border,
-                                color: true ? Colors.red : colors.textSecondary,
+                                color: provider.isFavorite(product.id!) ? Colors.red : colors.textSecondary,
                                 size: 18.sp,
                               ),
                             );

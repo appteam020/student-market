@@ -25,4 +25,26 @@ class DashboardController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  List<ProductModel> mySoldProducts = [];
+  int totalProfit = 0;
+  RequestState mySoldProductsState = RequestState.init;
+  Future<void> getMySoldProducts() async {
+    mySoldProductsState = RequestState.loading;
+    notifyListeners();
+    try {
+      final response = await Supabase.instance.client
+          .from('sold')
+          .select('*, product_table(*,tb_user(*))')
+          .eq('buy_with', Supabase.instance.client.auth.currentUser!.id);
+      mySoldProducts = response.map((e) => ProductModel.fromJson(e['product_table'])).toList();
+      totalProfit = response.map((e) => e['product_table']['price']).toList().reduce((a, b) => a + b);
+      mySoldProductsState = RequestState.success;
+      notifyListeners();
+    } catch (e) {
+      print("asd${e}");
+      mySoldProductsState = RequestState.error;
+      notifyListeners();
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_student/core/eunm/request_state.dart';
@@ -27,7 +28,7 @@ class ForgotPasswordController extends ChangeNotifier {
     if (formKey.currentState!.validate()) {
       try {
         final response = await Supabase.instance.client.auth.resetPasswordForEmail(emailController.text);
-        customSnackBar(context, 'تم إرسال كود إعادة تعيين كلمة المرور', colors.primary);
+        customSnackBar(context, tr('reset_password_sent_successfully'), colors.primary);
         changeRequestState(RequestState.success);
         context.push('/otp', extra: emailController.text); // إنتقل إلى صفحة إدخال الـ OTP
       } catch (e) {
@@ -61,7 +62,7 @@ class ForgotPasswordController extends ChangeNotifier {
     changeResetPasswordState(RequestState.loading);
     try {
       final response = await Supabase.instance.client.auth.updateUser(UserAttributes(password: newPassword));
-      customSnackBar(context, 'تم إعادة تعيين كلمة المرور', colors.primary);
+      customSnackBar(context, tr('password_reset_successfully'), colors.primary);
       changeResetPasswordState(RequestState.success);
       context.push('/login'); // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
     } on AuthException catch (e) {

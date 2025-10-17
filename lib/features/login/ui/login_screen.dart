@@ -103,7 +103,13 @@ class LoginScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 24.h),
-                        GoogleLoginButton(onPressed: () {}),
+                        value.googleLoginState == RequestState.loading
+                            ? Center(child: CircularProgressIndicator())
+                            : GoogleLoginButton(
+                                onPressed: () async {
+                                  await value.googleLogin(context);
+                                },
+                              ),
                         SizedBox(height: 32.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

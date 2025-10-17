@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
@@ -76,20 +78,54 @@ class ProfileController extends ChangeNotifier {
       }
 
       stateUploadImageMangement(RequestState.success);
-      customSnackBar(context, 'تم تعديل الصورة الشخصية بنجاح', colors.primary);
+      customSnackBar(context, tr('profile_image_updated_successfully'), colors.primary);
       Navigator.of(context).pop();
       file = null;
     } on AuthException catch (e) {
-      customSnackBar(context, e.message, Colors.red);
+      customSnackBar(context, tr('profile_image_updated_error'), Colors.red);
       stateUploadImageMangement(RequestState.error);
     } on PostgrestException catch (e) {
+      customSnackBar(context, tr('profile_image_updated_error'), Colors.red);
       stateUploadImageMangement(RequestState.error);
     } on StorageException catch (e) {
+      customSnackBar(context, tr('profile_image_updated_error'), Colors.red);
       stateUploadImageMangement(RequestState.error);
     } catch (e) {
       print(e);
-      customSnackBar(context, e.toString(), Colors.red);
+      customSnackBar(context, tr('profile_image_updated_error'), Colors.red);
       stateUploadImageMangement(RequestState.error);
+    }
+  }
+
+  TextEditingController nameController = TextEditingController();
+  final formkey = GlobalKey<FormState>();
+  RequestState editProfileName = RequestState.init;
+  void initialValue(String name) {
+    nameController.text = name;
+    notifyListeners();
+  }
+
+  void updateProfileName(BuildContext context) async {
+    if (formkey.currentState!.validate()) {
+      editProfileName = RequestState.loading;
+      notifyListeners();
+
+      try {
+        final supabase = Supabase.instance.client;
+        final user = await supabase.auth.getUser();
+        final response = await supabase.from('tb_user').update({'full_name': nameController.text}).eq('user_id', user.user!.id);
+        getProfile(isLoading: false);
+        editProfileName = RequestState.success;
+        notifyListeners();
+        customSnackBar(context, tr('update_profile_name_successfully'), colors.primary);
+        context.pop();
+        nameController.clear();
+      } catch (e) {
+        editProfileName = RequestState.error;
+        notifyListeners();
+        customSnackBar(context, tr('update_profile_name_error'), Colors.red);
+        context.pop();
+      }
     }
   }
 }

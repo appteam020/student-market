@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market_student/core/di/get_it.dart';
 import 'package:market_student/features/home/ui/home.dart';
 import 'package:market_student/features/home/ui/widgets/main_nav.dart';
 import 'package:market_student/features/login/ui/login_screen.dart';
@@ -30,8 +31,8 @@ class _InitialScreenState extends State<InitialScreen> {
         } else if (snapshot.connectionState == ConnectionState.none) {
           return const LoginScreen();
         } else {
-          return ChangeNotifierProvider(
-            create: (context) => ProfileController()..getProfile(),
+          return ChangeNotifierProvider.value(
+            value: getIt<ProfileController>()..getProfile(),
             child: MainNavigation(child: const HomeScreen()),
           );
         }

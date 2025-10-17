@@ -1,14 +1,23 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market_student/core/di/get_it.dart';
+import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/features/chats/chat_screen/chat_screen.dart';
 import 'package:market_student/features/chats/controller/chat_provider.dart';
+import 'package:market_student/features/favorites_page/controller/favorites_provider.dart';
 import 'package:market_student/features/home/model/product_model.dart';
+import 'package:market_student/features/product/controller/product_details_controller.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -38,11 +47,14 @@ class _ProductDetailsState extends State<ProductDetails> {
               children: [
                 Stack(
                   children: [
-                    Image.network(
-                      widget.productModel.image![seletectImage],
+                    CachedNetworkImage(
+                      imageUrl: widget.productModel.image![seletectImage],
                       width: double.infinity,
                       height: 350.h,
                       fit: BoxFit.fill,
+                      errorWidget: (context, url, error) {
+                        return Icon(Icons.error);
+                      },
                     ),
                     Positioned(
                       top: 16.h,
@@ -62,6 +74,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     } else {
                                       provider.addFavorite(widget.productModel.id!);
                                     }
+                                    getIt<FavoritesProvider>().getFavorites();
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(8),
@@ -108,7 +121,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: seletectImage == index ? colors.primary : colors.textSecondary, width: 4),
                           ),
-                          child: Image.network(widget.productModel.image![index], width: 50.w, height: 50.h, fit: BoxFit.cover),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.productModel.image![index],
+                            width: 50.w,
+                            height: 50.h,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       );
                     },
@@ -141,7 +159,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ).textTheme.bodyLarge?.copyWith(color: colors.textPrimary, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          widget.productModel.status ?? "",
+                          widget.productModel.status == null ? "" : tr(widget.productModel.status!),
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge?.copyWith(color: colors.textSecondary, fontWeight: FontWeight.bold),
@@ -187,9 +205,57 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ],
                     ),
-
                     SizedBox(height: 16.h),
 
+                    if (widget.productModel.isSold != true &&
+                        widget.productModel.user!.token.toString() != Supabase.instance.client.auth.currentUser!.id)
+                      //   if ()
+                      ChangeNotifierProvider(
+                        create: (context) => ProductDetailsController(),
+                        child: Consumer<ProductDetailsController>(
+                          builder: (context, value, child) {
+                            return Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(5),
+                                  width: double.infinity,
+                                  child: OutlinedButton.icon(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text(tr("Buy_now")),
+                                            content: Text(tr("Are_you_sure_you_want_to_buy_this_product")),
+                                            actions: [
+                                              TextButton(onPressed: () => Navigator.pop(context), child: Text(tr("Cancel"))),
+                                              value.buyProductState == RequestState.loading
+                                                  ? CircularProgressIndicator()
+                                                  : TextButton(
+                                                      onPressed: () {
+                                                        value.buyProduct(context, widget.productModel);
+                                                      },
+                                                      child: Text(tr("Buy")),
+                                                    ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      backgroundColor: colors.red,
+                                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                                      side: BorderSide(color: colors.background, width: 1.5),
+                                    ),
+                                    icon: Icon(Icons.shopping_cart, color: colors.background),
+                                    label: Text(tr("Buy_now"), style: TextStyle(color: colors.background)),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
                     Row(
                       children: [
                         if (widget.productModel.user!.token.toString() != Supabase.instance.client.auth.currentUser!.id)
@@ -229,14 +295,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         SizedBox(width: 12.w),
                         Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(vertical: 12.h),
-                              side: BorderSide(color: colors.primary, width: 1.5),
+                          child: ChangeNotifierProvider.value(
+                            value: getIt<ProductDetailsController>(),
+                            child: Consumer<ProductDetailsController>(
+                              builder: (context, value, child) {
+                                return ElevatedButton.icon(
+                                  onPressed: () async {
+                                    value.shareProductWithImages(widget.productModel);
+                                  },
+                                  icon: Icon(Icons.share, color: colors.primary),
+                                  label: Text(
+                                    tr("share_with_friend"),
+                                    style: TextStyle(color: colors.primary),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              },
                             ),
-                            icon: Icon(Icons.share, color: colors.primary),
-                            label: Text(tr("share_with_friend"), style: TextStyle(color: colors.primary)),
                           ),
                         ),
                       ],

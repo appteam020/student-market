@@ -5,6 +5,7 @@ import 'package:market_student/features/chats/ui/chats.dart';
 import 'package:market_student/features/dashboard/ui/dashboard.dart';
 import 'package:market_student/features/dashboard/ui/my_product_screen.dart';
 import 'package:market_student/features/favarite/ui/favarite.dart';
+import 'package:market_student/features/favorites_page/ui/favorites_screen.dart';
 import 'package:market_student/features/forget%20password/ui/forget_password.dart';
 import 'package:market_student/features/forget%20password/ui/otp.dart';
 import 'package:market_student/features/forget%20password/ui/reset_password.dart';
@@ -47,7 +48,11 @@ final GoRouter router = GoRouter(
         return ResetPasswordScreen(otp: otp['otp'], email: otp['email']);
       },
     ),
-    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
+    GoRoute(path: '/favorites', builder: (context, state) => FavoritesScreen()),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const MainNavigation(child: const HomeScreen()),
+    ),
     GoRoute(
       path: '/product_details',
       builder: (context, state) {

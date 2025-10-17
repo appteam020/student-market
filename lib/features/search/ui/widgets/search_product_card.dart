@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_student/core/di/get_it.dart';
 import 'package:market_student/core/favorites_controller.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/favorites_page/controller/favorites_provider.dart';
 import 'package:market_student/features/home/model/product_model.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +34,15 @@ class SearchProductCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8.r),
-              child: Image.network(model.image![0], height: 100.h, width: double.infinity, fit: BoxFit.cover),
+              child: CachedNetworkImage(
+                imageUrl: model.image![0],
+                height: 100.h,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.error);
+                },
+              ),
             ),
             SizedBox(height: 8.h),
 
@@ -73,6 +83,7 @@ class SearchProductCard extends StatelessWidget {
                           } else {
                             provider.addFavorite(model.id!);
                           }
+                          getIt<FavoritesProvider>().getFavorites();
                         },
                         child: Icon(
                           provider.isFavorite(model.id!) ? Icons.favorite : Icons.favorite_border,
