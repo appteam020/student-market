@@ -13,6 +13,7 @@ import 'package:market_student/features/home/model/product_model.dart';
 import 'package:market_student/features/home/ui/build_small_product_item.dart';
 import 'package:market_student/features/home/ui/widgets/bottom_nav.dart';
 import 'package:market_student/features/profile/ui/profile_screen.dart';
+import 'package:market_student/features/view_all_featrured_offers/view_all_featrured_offers.dart';
 import 'package:provider/provider.dart';
 import 'widgets/home_header.dart';
 import 'widgets/search_filter_bar.dart';
@@ -136,13 +137,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                       ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        GoRouter.of(context).push("/featured_offers");
-                      },
-                      child: Text(
-                        tr('action_view_all'),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
+                    ChangeNotifierProvider.value(
+                      value: getIt<MainProvider>(),
+                      child: Consumer<MainProvider>(
+                        builder: (context, value, child) {
+                          return TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ViewAllFeatruredOffers(title: tr('section_featured_offers'), products: value.model),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              tr('action_view_all'),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -156,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 100.h,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemCount: value.model.length,
+                          itemCount: value.model.length > 5 ? 5 : value.model.length,
                           separatorBuilder: (_, __) => SizedBox(width: 12.w),
                           itemBuilder: (context, index) {
                             final product = value.model[index];
@@ -183,23 +197,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
                 SizedBox(height: 12.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      tr('section_all_products'),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        tr('action_view_all'),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
-                      ),
-                    ),
-                  ],
+                ChangeNotifierProvider.value(
+                  value: getIt<MainProvider>(),
+                  child: Consumer<MainProvider>(
+                    builder: (context, value, child) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            tr('section_all_products'),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ViewAllFeatruredOffers(title: tr('section_all_products'), products: value.model),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              tr('action_view_all'),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(height: 12.h),
                 ChangeNotifierProvider.value(
@@ -214,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: provider.model.length,
+                            itemCount: provider.model.length > 5 ? 5 : provider.model.length,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisSpacing: 22.h,

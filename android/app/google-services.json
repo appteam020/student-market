@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "81744215501",
+    "project_id": "market-app-a5d0f",
+    "storage_bucket": "market-app-a5d0f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81744215501:android:0b8a3f2feea7512d2b1884",
+        "android_client_info": {
+          "package_name": "nada.aya_packageappmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81744215501-b43lhdj5asf3dq9mu0dfj717hlooa79u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATMbh_eK6sDGwVkHRIlt3RUo-ggUi_iT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81744215501-b43lhdj5asf3dq9mu0dfj717hlooa79u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

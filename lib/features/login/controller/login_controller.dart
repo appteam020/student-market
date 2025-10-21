@@ -5,6 +5,7 @@ import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/core/widget/custom_snackbar.dart';
 import 'package:market_student/features/login/service/google_auth.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginProvider extends ChangeNotifier {
@@ -16,21 +17,30 @@ class LoginProvider extends ChangeNotifier {
   RequestState googleLoginState = RequestState.init;
   String googleErrorMessage = "";
   Future<void> googleLogin(BuildContext context) async {
-    googleLoginState = RequestState.loading;
-    notifyListeners();
+    stateMangement(RequestState.loading);
+
     try {
       final response = await GoogleSignInService.signInWithGoogle();
       if (response != null) {
         customSnackBar(context, tr('login_successfully'), colors.primary);
-        context.go('/inital_screen');
-        googleLoginState = RequestState.success;
+        String uniqueId = genrateUniqueId();
+
+        await Supabase.instance.client.from('tb_user').update({'onesignal_id': uniqueId}).eq('user_id', response.user!.id);
+        OneSignal.login(uniqueId);
+        context.go('/home');
+        stateMangement(RequestState.success);
       } else {
         googleErrorMessage = tr('login_cancelled');
-        googleLoginState = RequestState.error;
+        stateMangement(RequestState.error);
       }
     } catch (e) {
       googleErrorMessage = e.toString();
+      stateMangement(RequestState.error);
     }
+  }
+
+  String genrateUniqueId() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   void stateMangement(RequestState state) {
@@ -46,7 +56,11 @@ class LoginProvider extends ChangeNotifier {
         email: emailController.text,
       );
       customSnackBar(context, tr('login_successfully'), colors.primary);
-      context.go('/inital_screen');
+      context.go('/home');
+      String uniqueId = genrateUniqueId();
+
+      await Supabase.instance.client.from('tb_user').update({'onesignal_id': uniqueId}).eq('user_id', response.user!.id);
+      OneSignal.login(uniqueId);
       stateMangement(RequestState.success);
     } on AuthException catch (e) {
       errorMessage = e.message;

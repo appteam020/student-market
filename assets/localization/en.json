@@ -157,10 +157,13 @@
   "update_profile_name_successfully":"Update profile name successfully",
   "update_profile_name_error":"Update profile name error",
   "edit_profile_name":"Edit profile name",
-  "save":"Save",
+  "save":"Save","login_successfully":"Login successfully","login_cancelled":"Login cancelled","login_error":"Login error",
   "Choose the app language": "Choose the app language","Buy_now":"Buy now","seller":"seller","favorites":"favorites","write a message":"write a message"
- 
-
+ ,
+"new_message_from":"New message from",
+"you_have_a_new_message":"You have a new message",
+"No_transactions_found":"No transactions found",
+"Something_went_wrong":"Something went wrong"
 
 
 

@@ -36,9 +36,14 @@ class DashboardController extends ChangeNotifier {
       final response = await Supabase.instance.client
           .from('sold')
           .select('*, product_table(*,tb_user(*))')
-          .eq('buy_with', Supabase.instance.client.auth.currentUser!.id);
-      mySoldProducts = response.map((e) => ProductModel.fromJson(e['product_table'])).toList();
-      totalProfit = response.map((e) => e['product_table']['price']).toList().reduce((a, b) => a + b);
+          .eq('sold_with', Supabase.instance.client.auth.currentUser!.id);
+      if (response.isNotEmpty) {
+        mySoldProducts = response.map((e) => ProductModel.fromJson(e['product_table'])).toList();
+        totalProfit = response.map((e) => e['product_table']['price']).toList().reduce((a, b) => a + b);
+      } else {
+        mySoldProducts = [];
+        totalProfit = 0;
+      }
       mySoldProductsState = RequestState.success;
       notifyListeners();
     } catch (e) {

@@ -1,19 +1,29 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:market_student/core/di/get_it.dart';
-import 'package:market_student/core/favorites_controller.dart';
-import 'package:market_student/core/routing/app_routing.dart';
-import 'package:market_student/features/home/controller/main_controller.dart';
 
-import 'package:provider/provider.dart';
+import 'package:market_student/core/routing/app_routing.dart';
+
+import 'package:market_student/firebase_options.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/light_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await EasyLocalization.ensureInitialized();
+  // ضع App ID الخاص بك هنا
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize("e194f4cf-c614-441e-ab70-fbc4876e3558");
+
+  // طلب الإذن للإشعارات
+  OneSignal.Notifications.requestPermission(true);
+
   setup();
   await Supabase.initialize(
     url: 'https://vhemxggjxvdpyfcuirsv.supabase.co',

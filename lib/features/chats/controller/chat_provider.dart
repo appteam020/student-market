@@ -5,7 +5,9 @@ import 'package:dash_chat_3/dash_chat_3.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:market_student/core/eunm/request_state.dart';
+import 'package:market_student/core/send_not.dart';
 import 'package:market_student/features/chats/model/chat_model.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatsProvider extends ChangeNotifier {
@@ -18,8 +20,7 @@ class ChatsProvider extends ChangeNotifier {
   RequestState _conversationsState = RequestState.init;
   RequestState get conversationsState => _conversationsState;
 
-  List<Conversation> _conversations = [];
-  List<Conversation> get conversations => _conversations;
+  List<Conversation> conversations = [];
 
   StreamSubscription<List<Map<String, dynamic>>>? _conversationsSubscription;
 
@@ -36,7 +37,7 @@ class ChatsProvider extends ChangeNotifier {
       final List<dynamic> rpcResponse = await supabase.rpc('get_conversation_partners', params: {'current_user_id': user.id});
 
       if (rpcResponse.isEmpty) {
-        _conversations = [];
+        conversations = [];
         _conversationsState = RequestState.success;
         notifyListeners();
         return;
@@ -46,7 +47,7 @@ class ChatsProvider extends ChangeNotifier {
 
       final profilesResponse = await supabase
           .from('tb_user')
-          .select('id, full_name, email, image, user_id')
+          .select('id, full_name, email, image, user_id,onesignal_id')
           .inFilter('user_id', partnerIds);
 
       final profilesMap = {for (var profileMap in profilesResponse) profileMap['user_id']: Profile.fromMap(profileMap)};
@@ -69,7 +70,7 @@ class ChatsProvider extends ChangeNotifier {
 
       tempConversations.sort((a, b) => b.lastMessageTime.compareTo(a.lastMessageTime));
 
-      _conversations = tempConversations;
+      conversations = tempConversations;
       _conversationsState = RequestState.success;
     } catch (e) {
       debugPrint('Error fetching conversations: $e');
@@ -105,7 +106,7 @@ class ChatsProvider extends ChangeNotifier {
   Future<void> initializeAndSubscribeToMessages(String otherUserId) async {
     _messagesState = RequestState.loading;
     _messages = [];
-    notifyListeners();
+    // notifyListeners();
 
     disposeMessagesSubscription();
 
@@ -154,17 +155,43 @@ class ChatsProvider extends ChangeNotifier {
     }, onError: (error) => debugPrint("Error in Supabase stream subscription: $error"));
   }
 
-  Future<void> sendMessage(String text, String otherUserId, List<String> imageUrls) async {
+  Future<void> sendMessage(String text, String otherUserId, List<String> imageUrls, String onesignalId) async {
     final payload = {
       'message': text,
       'sender_id': currentUser.id,
       'reciver_id': otherUserId,
       'attachment': imageUrls.isEmpty ? null : imageUrls,
     };
+    final username = await getCurrentUserName();
+    String fullName = '';
+    if (username != '') {
+      fullName = "You have a new message From $username";
+    } else {
+      fullName = "You have a new message";
+    }
+    sendOneSignalNotification(
+      playerId: onesignalId.toString(),
+      title: "New Message",
+      body: fullName,
+      bigPicture: imageUrls.isNotEmpty ? imageUrls.first : null,
+    );
     await supabase.from('tb_chats').insert(payload).then((onValue) {
       imageUrls.clear();
       notifyListeners();
     });
+    await supabase.from("notifications").insert({
+      "reciver_user": otherUserId,
+      "message": fullName,
+      "isRead": false,
+      "sender_id": currentUser.id,
+    });
+  }
+
+  Future<String> getCurrentUserName() async {
+    final responseId = supabase.auth.currentUser?.id;
+    if (responseId == null) return '';
+    final response = await supabase.from('tb_user').select('full_name').eq('user_id', responseId).maybeSingle();
+    return response?['full_name'] ?? '';
   }
 
   ChatMessage _mapToChatMessage(Map<String, dynamic> item) {
@@ -229,7 +256,7 @@ class ChatsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> uploadFileToSupabase(String text, String otherUserId) async {
+  Future<void> uploadFileToSupabase(String text, String otherUserId, String onesignalId) async {
     stateUploadFileMangement(RequestState.loading);
     try {
       Future.wait(
@@ -240,7 +267,7 @@ class ChatsProvider extends ChangeNotifier {
           _imageUrls.add(imageUrl);
         }),
       ).then((onValue) {
-        sendMessage(text, otherUserId, imageUrls);
+        sendMessage(text, otherUserId, imageUrls, onesignalId);
         clearFiles();
         notifyListeners();
         stateUploadFileMangement(RequestState.success);

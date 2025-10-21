@@ -1,4 +1,4 @@
-package com.example.market_student
+package nada.aya_packageappmarket
 
 import io.flutter.embedding.android.FlutterActivity
 

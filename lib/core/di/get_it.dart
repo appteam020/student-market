@@ -5,6 +5,7 @@ import 'package:market_student/features/favorites_page/controller/favorites_prov
 import 'package:market_student/features/home/controller/main_controller.dart';
 import 'package:market_student/features/login/controller/login_controller.dart';
 import 'package:market_student/features/login/controller/signup_controller.dart';
+import 'package:market_student/features/notification/controller/notifications_procider.dart';
 import 'package:market_student/features/product/controller/product_details_controller.dart';
 import 'package:market_student/features/profile/controller/profile_controller.dart';
 
@@ -19,4 +20,5 @@ void setup() {
   getIt.registerLazySingleton<SignUpProvider>(() => SignUpProvider());
   getIt.registerLazySingleton<ProfileController>(() => ProfileController());
   getIt.registerLazySingleton<FavoritesProvider>(() => FavoritesProvider());
+  getIt.registerLazySingleton<NotificationsProvider>(() => NotificationsProvider());
 }

@@ -8,11 +8,13 @@ import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/core/widget/app_bar.dart';
 import 'package:market_student/features/login/ui/widgets/custom_text_field.dart';
+import 'package:market_student/features/profile/controller/noti_controller.dart';
 import 'package:market_student/features/profile/controller/profile_controller.dart';
 import 'package:market_student/features/profile/ui/widgets/lang_dialog.dart';
 import 'package:market_student/features/profile/ui/widgets/logout.dart';
 import 'package:market_student/features/profile/ui/widgets/profile_header.dart';
 import 'package:market_student/features/profile/ui/widgets/profile_tile.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../login/ui/widgets/custom_button.dart';
@@ -121,12 +123,21 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(height: 16.h),
                 Divider(),
 
-                SwitchListTile(
-                  value: true,
+                ChangeNotifierProvider(
+                  create: (context) => NotiController()..initStatus(),
+                  child: Consumer<NotiController>(
+                    builder: (context, value, child) {
+                      return SwitchListTile(
+                        value: value.isNotificationsEnabled,
 
-                  onChanged: (val) {},
-                  title: Text(tr('notifications')),
-                  secondary: SvgPicture.asset('assets/images/notification3.svg'),
+                        onChanged: (val) async {
+                          value.toggleNotifications(val);
+                        },
+                        title: Text(tr('notifications')),
+                        secondary: SvgPicture.asset('assets/images/notification3.svg'),
+                      );
+                    },
+                  ),
                 ),
                 Divider(thickness: .5, height: 0.5),
                 ProfileOptionTile(

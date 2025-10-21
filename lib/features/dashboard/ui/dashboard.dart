@@ -10,6 +10,7 @@ import 'package:market_student/features/dashboard/controller/dashboard_controlle
 import 'package:market_student/features/dashboard/ui/widgets/recent_transaction_item.dart';
 import 'package:market_student/features/dashboard/ui/widgets/stats_card.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:market_student/features/view_all_featrured_offers/view_all_featrured_offers.dart';
 import 'package:provider/provider.dart'; // لاستدعاء tr()
 
 class DashboardScreen extends StatelessWidget {
@@ -111,7 +112,31 @@ class DashboardScreen extends StatelessWidget {
                     tr('recent_transactions'),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  Text(tr('view_all'), style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.green)),
+                  ChangeNotifierProvider.value(
+                    value: getIt<DashboardController>()..getMySoldProducts(),
+
+                    child: Consumer<DashboardController>(
+                      builder: (context, value, child) {
+                        return TextButton(
+                          onPressed: value.mySoldProducts.isNotEmpty
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewAllFeatruredOffers(
+                                        title: tr('section_all_products'),
+                                        products: value.mySoldProducts,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          style: ButtonStyle(foregroundColor: WidgetStateProperty.all(Colors.green)),
+                          child: Text(tr('view_all')),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 12.h),
@@ -122,13 +147,24 @@ class DashboardScreen extends StatelessWidget {
 
                   child: Consumer<DashboardController>(
                     builder: (context, value, child) {
-                      return ListView.builder(
-                        //  shrinkWrap: true,
-                        itemCount: value.mySoldProducts.length,
-                        itemBuilder: (context, index) {
-                          return RecentTransaction(product: value.mySoldProducts[index]);
-                        },
-                      );
+                      switch (value.mySoldProductsState) {
+                        case RequestState.init:
+                        case RequestState.loading:
+                          return Center(child: CircularProgressIndicator());
+                        case RequestState.success:
+                          if (value.mySoldProducts.isEmpty) {
+                            return Center(child: Text(tr("No transactions found")));
+                          }
+                          return ListView.builder(
+                            //  shrinkWrap: true,
+                            itemCount: value.mySoldProducts.length > 5 ? 5 : value.mySoldProducts.length,
+                            itemBuilder: (context, index) {
+                              return RecentTransaction(product: value.mySoldProducts[index]);
+                            },
+                          );
+                        case RequestState.error:
+                          return Center(child: Text(tr("Something went wrong")));
+                      }
                     },
                   ),
                 ),

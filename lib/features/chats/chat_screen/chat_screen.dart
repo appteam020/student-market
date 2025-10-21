@@ -8,10 +8,17 @@ import 'package:market_student/features/chats/controller/chat_provider.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key, required this.chatProvider, required this.partnerId, required this.partnerName});
+  const ChatScreen({
+    super.key,
+    required this.chatProvider,
+    required this.partnerId,
+    required this.partnerName,
+    required this.onesignalId,
+  });
   final ChatsProvider chatProvider;
   final String partnerId;
   final String partnerName;
+  final String onesignalId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,9 +139,9 @@ class ChatScreen extends StatelessWidget {
 
               onSend: (val) {
                 if (value.files.isNotEmpty) {
-                  value.uploadFileToSupabase(val.text, partnerId);
+                  value.uploadFileToSupabase(val.text, partnerId, onesignalId);
                 } else {
-                  value.sendMessage(val.text, partnerId, value.imageUrls);
+                  value.sendMessage(val.text, partnerId, value.imageUrls, onesignalId);
                 }
               },
               currentUser: ChatUser(id: value.supabase.auth.currentUser!.id, firstName: value.supabase.auth.currentUser!.email!),

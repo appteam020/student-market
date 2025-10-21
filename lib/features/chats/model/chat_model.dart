@@ -5,8 +5,16 @@ class Profile {
   final String email;
   final String? profileImage;
   final String? userId;
+  final String? onesignalId;
 
-  Profile({required this.id, required this.fullName, required this.email, required this.profileImage, required this.userId});
+  Profile({
+    required this.id,
+    required this.fullName,
+    required this.email,
+    required this.profileImage,
+    required this.userId,
+    required this.onesignalId,
+  });
 
   factory Profile.fromMap(Map<String, dynamic> map) {
     return Profile(
@@ -15,6 +23,7 @@ class Profile {
       email: map['email'] ?? 'Unknown Email',
       profileImage: map['image'],
       userId: map['user_id'],
+      onesignalId: map['onesignal_id'],
     );
   }
 }

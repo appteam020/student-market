@@ -171,7 +171,11 @@
     "update_profile_name_error":"فشل تعديل الاسم",
     "edit_profile_name":"تعديل الاسم",
     "save":"حفظ",
-  "seller":"البائع","favorites":"المفضلة","write a message":"اكتب رسالة"
+  "seller":"البائع","favorites":"المفضلة","write a message":"اكتب رسالة",
+  "new_message_from":"رسالة جديدة من",
+  "you_have_a_new_message":"لديك رسالة جديدة",
+  "No_transactions_found":"لا توجد معاملات بعد",
+  "Something_went_wrong":"هناك خطأ ما"
 
 
 

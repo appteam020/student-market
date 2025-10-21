@@ -12,8 +12,8 @@ class GoogleSignInService {
     try {
       log('Initializing GoogleSignIn...');
       await _googleSignIn.initialize(
-        clientId: Platform.isIOS ? '523816985336-hctn22cbk83d0duihrao96gpmujpcgc4.apps.googleusercontent.com' : null,
-        serverClientId: '945058684721-rdmnvmgtc92r7roh1aqhpqhbqnsri2b4.apps.googleusercontent.com',
+        clientId: Platform.isIOS ? '81744215501-l9ujlrno577voal3ftuf2oqfo8jb7k6d.apps.googleusercontent.com' : null,
+        serverClientId: '81744215501-b43lhdj5asf3dq9mu0dfj717hlooa79u.apps.googleusercontent.com',
       );
 
       log('Calling authenticate()...');

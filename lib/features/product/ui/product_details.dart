@@ -273,6 +273,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             partnerId: widget.productModel.user!.token!,
                                             partnerName: widget.productModel.user?.fullName ?? "",
                                             chatProvider: value,
+                                            onesignalId: widget.productModel.user?.onesignalId ?? "",
                                           ),
                                         ),
                                       );

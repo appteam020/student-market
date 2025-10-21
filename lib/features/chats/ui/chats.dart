@@ -42,6 +42,7 @@ class Chats extends StatelessWidget {
                               chatProvider: value,
                               partnerId: conversation.partner.userId ?? '',
                               partnerName: conversation.partner.fullName,
+                              onesignalId: conversation.partner.onesignalId ?? '',
                             );
                           },
                         ),
