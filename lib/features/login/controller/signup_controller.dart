@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
 import 'package:market_student/core/widget/custom_snackbar.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpProvider extends ChangeNotifier {
@@ -21,6 +22,10 @@ class SignUpProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String genrateUniqueId() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
+  }
+
   Future<void> signUp(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       changeRequestState(RequestState.loading);
@@ -36,6 +41,10 @@ class SignUpProvider extends ChangeNotifier {
             'email': emailController.text,
             'user_id': response.user!.id,
           });
+          String uniqueId = genrateUniqueId();
+
+          await Supabase.instance.client.from('tb_user').update({'onesignal_id': uniqueId}).eq('user_id', response.user!.id);
+          OneSignal.login(uniqueId);
           customSnackBar(context, tr('signup_successfully'), colors.Completed);
           context.pop();
           changeRequestState(RequestState.success); // عند النجاح
