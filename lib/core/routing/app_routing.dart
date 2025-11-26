@@ -14,6 +14,7 @@ import 'package:market_student/features/home/model/product_model.dart';
 import 'package:market_student/features/home/ui/home.dart';
 import 'package:market_student/features/home/ui/widgets/main_nav.dart';
 import 'package:market_student/features/inital/initial_screen.dart';
+import 'package:market_student/features/login/controller/login_controller.dart';
 import 'package:market_student/features/login/ui/login_screen.dart';
 import 'package:market_student/features/login/ui/signup_screen.dart';
 import 'package:market_student/features/notification/ui/notification_screen.dart';
@@ -27,12 +28,30 @@ import 'package:market_student/features/on_boarding/ui/on_boarding.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/inital_screen',
   routes: [
-    GoRoute(path: '/inital_screen', builder: (context, state) => InitialScreen()),
+    GoRoute(
+      path: '/inital_screen',
+      builder: (context, state) => InitialScreen(),
+    ),
     GoRoute(path: '/splash', builder: (context, state) => SplashScreen()),
-    GoRoute(path: '/onboarding', builder: (context, state) => OnBoardingScreen()),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => OnBoardingScreen(),
+    ),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
-    GoRoute(path: '/signup', builder: (context, state) => SignupScreen()),
-    GoRoute(path: '/forgot_password', builder: (context, state) => ForgotPasswordScreen()),
+    GoRoute(
+      path: '/signup',
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>;
+
+        final LoginProvider provider = data['login'];
+
+        return SignupScreen(loginValue: provider);
+      },
+    ),
+    GoRoute(
+      path: '/forgot_password',
+      builder: (context, state) => ForgotPasswordScreen(),
+    ),
     GoRoute(
       path: '/otp',
       builder: (context, state) {
@@ -51,7 +70,8 @@ final GoRouter router = GoRouter(
     GoRoute(path: '/favorites', builder: (context, state) => FavoritesScreen()),
     GoRoute(
       path: '/home',
-      builder: (context, state) => const MainNavigation(child: const HomeScreen()),
+      builder: (context, state) =>
+          const MainNavigation(child: const HomeScreen()),
     ),
     GoRoute(
       path: '/product_details',
@@ -61,11 +81,17 @@ final GoRouter router = GoRouter(
       },
     ),
     // Assuming OTP screen is similar
-    GoRoute(path: '/notifications', builder: (context, state) => NotificationScreen()),
+    GoRoute(
+      path: '/notifications',
+      builder: (context, state) => NotificationScreen(),
+    ),
 
     GoRoute(path: '/favarite', builder: (context, state) => Favarite()),
 
-    GoRoute(path: '/search_screen', builder: (context, state) => SearchScreen()),
+    GoRoute(
+      path: '/search_screen',
+      builder: (context, state) => SearchScreen(),
+    ),
 
     GoRoute(path: '/dashboard', builder: (context, state) => DashboardScreen()),
 
@@ -77,13 +103,22 @@ final GoRouter router = GoRouter(
       },
     ),
 
-    GoRoute(path: '/add_product', builder: (context, state) => UploadProductScreen()),
+    GoRoute(
+      path: '/add_product',
+      builder: (context, state) => UploadProductScreen(),
+    ),
 
     GoRoute(path: '/chats', builder: (context, state) => Chats()),
 
-    GoRoute(path: '/profile_screen', builder: (context, state) => ProfileScreen()),
+    GoRoute(
+      path: '/profile_screen',
+      builder: (context, state) => ProfileScreen(),
+    ),
 
-    GoRoute(path: '/change_password', builder: (context, state) => ChangePassword()),
+    GoRoute(
+      path: '/change_password',
+      builder: (context, state) => ChangePassword(),
+    ),
 
     GoRoute(path: '/help_center', builder: (context, state) => HelpCenter()),
   ],

@@ -1,5 +1,7 @@
 import java.util.Properties
 import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.security.KeyStore
 
 plugins {
     id("com.android.application")
@@ -37,12 +39,23 @@ android {
         keystoreProperties.load(FileInputStream(keystorePropertiesFile))
     }
 
+    val keystoreFile = file("key_app.jks")
+
+    // إنشاء keystore تلقائي إذا لم يكن موجود
+    if (!keystoreFile.exists()) {
+        println("Keystore not found, creating automatically...")
+        val keyStore = KeyStore.getInstance("JKS")
+        keyStore.load(null, null)
+        keyStore.store(FileOutputStream(keystoreFile), "123456".toCharArray())
+        println("Keystore created at: ${keystoreFile.absolutePath}")
+    }
+
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String?
-            keyPassword = keystoreProperties["keyPassword"] as String?
-            storeFile = keystoreProperties["storeFile"]?.let { file(it as String) }
-            storePassword = keystoreProperties["storePassword"] as String?
+            keyAlias = keystoreProperties.getProperty("keyAlias") ?: "upload"
+            keyPassword = keystoreProperties.getProperty("keyPassword") ?: "123456"
+            storeFile = keystoreFile
+            storePassword = keystoreProperties.getProperty("storePassword") ?: "123456"
         }
     }
 

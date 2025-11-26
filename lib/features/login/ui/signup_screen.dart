@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_student/core/eunm/request_state.dart';
 import 'package:market_student/core/theme/colors.dart';
+import 'package:market_student/features/login/controller/login_controller.dart';
 import 'package:market_student/features/login/controller/signup_controller.dart';
 import 'package:market_student/features/login/ui/widgets/custom_button.dart';
 import 'package:market_student/features/login/ui/widgets/custom_text_field.dart';
@@ -11,8 +12,8 @@ import 'package:market_student/features/login/ui/widgets/google_login_button.dar
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
-
+  const SignupScreen({super.key, required this.loginValue});
+  final LoginProvider loginValue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,12 @@ class SignupScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(height: 32.h),
-                        Center(child: Image.asset('assets/images/logo.png', height: 80.h)),
+                        Center(
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            height: 80.h,
+                          ),
+                        ),
                         SizedBox(height: 24.h),
                         Text(
                           'create_account'.tr(),
@@ -104,7 +110,9 @@ class SignupScreen extends StatelessWidget {
                             : CustomButton(
                                 text: 'signup'.tr(),
                                 onPressed: () async {
-                                  await context.read<SignUpProvider>().signUp(context);
+                                  await context.read<SignUpProvider>().signUp(
+                                    context,
+                                  );
                                 },
                               ),
                         SizedBox(height: 24.h),
@@ -119,22 +127,35 @@ class SignupScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 24.h),
-                        GoogleLoginButton(onPressed: () {}),
+                        ChangeNotifierProvider.value(
+                          value: loginValue,
+                          child: Consumer<LoginProvider>(
+                            builder: (context, loginProvider, child) {
+                              return GoogleLoginButton(
+                                onPressed: () {
+                                  loginProvider.googleLogin(context);
+                                },
+                              );
+                            },
+                          ),
+                        ),
                         SizedBox(height: 24.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               'have_account'.tr(),
-                              style: TextStyle(color: colors.textSecondary)?.copyWith(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: colors.textSecondary,
+                              )?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             TextButton(
                               onPressed: () => context.go('/login'),
                               child: Text(
                                 'login'.tr(),
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodyMedium?.copyWith(color: colors.primary)?.copyWith(fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: colors.primary)
+                                    ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],

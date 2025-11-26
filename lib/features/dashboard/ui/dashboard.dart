@@ -36,50 +36,76 @@ class DashboardScreen extends StatelessWidget {
                 childAspectRatio: 1.2,
                 children: [
                   ChangeNotifierProvider(
-                    create: (context) => DashboardController()..getMySoldProducts(),
+                    create: (context) =>
+                        DashboardController()..getMySoldProducts(),
                     child: Consumer<DashboardController>(
-                      builder: (BuildContext context, DashboardController value, Widget? child) {
-                        return StatsCard(
-                          svgIcon: 'assets/images/profile.svg',
-                          title: tr('total_profit'),
-                          count: "${value.totalProfit} ${tr('product_price_dollar')}",
-                          backgroundColor: colors.secondary.withOpacity(0.2),
-                        );
-                      },
+                      builder:
+                          (
+                            BuildContext context,
+                            DashboardController value,
+                            Widget? child,
+                          ) {
+                            return StatsCard(
+                              svgIcon: 'assets/images/profile.svg',
+                              title: tr('total_profit'),
+                              count:
+                                  "${value.totalProfit} ${tr('product_price_dollar')}",
+                              backgroundColor: colors.secondary.withOpacity(
+                                0.2,
+                              ),
+                            );
+                          },
                     ),
                   ),
                   ChangeNotifierProvider(
-                    create: (context) => DashboardController()..getMySoldProducts(),
+                    create: (context) =>
+                        DashboardController()..getMySoldProducts(),
                     child: Consumer<DashboardController>(
-                      builder: (BuildContext context, DashboardController value, Widget? child) {
-                        return StatsCard(
-                          svgIcon: 'assets/images/bag.svg',
-                          title: tr('sold_products'),
-                          count: value.mySoldProductsState == RequestState.loading
-                              ? "Loading..."
-                              : value.mySoldProducts.length.toString(),
-                          backgroundColor: colors.primary.withOpacity(0.2),
-                        );
-                      },
+                      builder:
+                          (
+                            BuildContext context,
+                            DashboardController value,
+                            Widget? child,
+                          ) {
+                            return StatsCard(
+                              svgIcon: 'assets/images/bag.svg',
+                              title: tr('sold_products'),
+                              count:
+                                  value.mySoldProductsState ==
+                                      RequestState.loading
+                                  ? "Loading..."
+                                  : value.mySoldProducts.length.toString(),
+                              backgroundColor: colors.primary.withOpacity(0.2),
+                            );
+                          },
                     ),
                   ),
                   ChangeNotifierProvider(
-                    create: (context) => DashboardController()..getMyCurrentPdoucts(),
+                    create: (context) =>
+                        DashboardController()..getMyCurrentPdoucts(),
                     child: Consumer<DashboardController>(
                       builder: (context, provider, child) {
                         return GestureDetector(
                           onTap: () {
-                            GoRouter.of(context).push('/my_product_screen', extra: provider.myCurrentProducts);
+                            GoRouter.of(context).push(
+                              '/my_product_screen',
+                              extra: provider.myCurrentProducts,
+                            );
                           },
                           child: StatsCard(
                             svgIcon: 'assets/images/tag.svg',
                             title: tr('my_products'),
-                            count: provider.myCurrentProductsState == RequestState.loading
+                            count:
+                                provider.myCurrentProductsState ==
+                                    RequestState.loading
                                 ? "Loading..."
                                 : provider.myCurrentProducts.length.toString(),
                             backgroundColor: colors.orange.withOpacity(0.2),
                             onTap: () {
-                              context.push('/my_product_screen', extra: provider.myCurrentProducts);
+                              context.push(
+                                '/my_product_screen',
+                                extra: provider.myCurrentProducts,
+                              );
                             },
                           ),
                         );
@@ -96,7 +122,9 @@ class DashboardScreen extends StatelessWidget {
                           },
                           svgIcon: 'assets/images/likes.svg',
                           title: tr('likes'),
-                          count: provider.isLoading ? "0" : provider.favoriteProductIds.length.toString(),
+                          count: provider.isLoading
+                              ? "0"
+                              : provider.favoriteProductIds.length.toString(),
                           backgroundColor: colors.red.withOpacity(0.2),
                         );
                       },
@@ -110,30 +138,42 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   Text(
                     tr('recent_transactions'),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   ChangeNotifierProvider.value(
                     value: getIt<DashboardController>()..getMySoldProducts(),
 
                     child: Consumer<DashboardController>(
                       builder: (context, value, child) {
-                        return TextButton(
-                          onPressed: value.mySoldProducts.isNotEmpty
-                              ? () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ViewAllFeatruredOffers(
-                                        title: tr('section_all_products'),
-                                        products: value.mySoldProducts,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              : null,
-                          style: ButtonStyle(foregroundColor: WidgetStateProperty.all(Colors.green)),
-                          child: Text(tr('view_all')),
-                        );
+                        return value.mySoldProducts.isNotEmpty
+                            ? TextButton(
+                                onPressed: value.mySoldProducts.isNotEmpty
+                                    ? () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ViewAllFeatruredOffers(
+                                                  title: tr(
+                                                    'section_all_products',
+                                                  ),
+                                                  products:
+                                                      value.mySoldProducts,
+                                                ),
+                                          ),
+                                        );
+                                      }
+                                    : null,
+                                style: ButtonStyle(
+                                  foregroundColor: WidgetStateProperty.all(
+                                    Colors.green,
+                                  ),
+                                ),
+                                child: Text(tr('view_all')),
+                              )
+                            : Container();
                       },
                     ),
                   ),
@@ -153,17 +193,25 @@ class DashboardScreen extends StatelessWidget {
                           return Center(child: CircularProgressIndicator());
                         case RequestState.success:
                           if (value.mySoldProducts.isEmpty) {
-                            return Center(child: Text(tr("No transactions found")));
+                            return Center(
+                              child: Text(tr("No_transactions_found")),
+                            );
                           }
                           return ListView.builder(
                             //  shrinkWrap: true,
-                            itemCount: value.mySoldProducts.length > 5 ? 5 : value.mySoldProducts.length,
+                            itemCount: value.mySoldProducts.length > 5
+                                ? 5
+                                : value.mySoldProducts.length,
                             itemBuilder: (context, index) {
-                              return RecentTransaction(product: value.mySoldProducts[index]);
+                              return RecentTransaction(
+                                product: value.mySoldProducts[index],
+                              );
                             },
                           );
                         case RequestState.error:
-                          return Center(child: Text(tr("Something went wrong")));
+                          return Center(
+                            child: Text(tr("Something went wrong")),
+                          );
                       }
                     },
                   ),

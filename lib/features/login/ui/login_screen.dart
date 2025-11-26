@@ -25,16 +25,26 @@ class LoginScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: SingleChildScrollView(
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Form(
                     key: value.formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(height: 32.h),
-                        Center(child: Image.asset('assets/images/logo.png', height: 80.h)),
+                        Center(
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            height: 80.h,
+                          ),
+                        ),
                         SizedBox(height: 32.h),
-                        Text('welcome_back'.tr(), style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.center),
+                        Text(
+                          'welcome_back'.tr(),
+                          style: Theme.of(context).textTheme.headlineLarge,
+                          textAlign: TextAlign.center,
+                        ),
                         SizedBox(height: 8.h),
                         Text(
                           'signin_to_continue'.tr(),
@@ -48,7 +58,9 @@ class LoginScreen extends StatelessWidget {
                           label: 'email'.tr(),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
-                            if (value == null || value.isEmpty || !value.contains('@')) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                !value.contains('@')) {
                               return 'invalid_email'.tr();
                             }
                             return null;
@@ -71,12 +83,17 @@ class LoginScreen extends StatelessWidget {
                         ),
 
                         Align(
-                          alignment: context.locale.languageCode == 'ar' ? Alignment.centerLeft : Alignment.centerRight,
+                          alignment: context.locale.languageCode == 'ar'
+                              ? Alignment.centerLeft
+                              : Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
                               context.push('/forgot_password');
                             },
-                            child: Text('forgot_password'.tr(), style: TextStyle(color: colors.primary)),
+                            child: Text(
+                              'forgot_password'.tr(),
+                              style: TextStyle(color: colors.primary),
+                            ),
                           ),
                         ),
                         SizedBox(height: 16.h),
@@ -116,16 +133,21 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             Text(
                               'no_account'.tr(),
-                              style: TextStyle(color: colors.textSecondary)?.copyWith(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: colors.textSecondary,
+                              )?.copyWith(fontWeight: FontWeight.bold),
                             ),
 
                             TextButton(
-                              onPressed: () => context.push('/signup'),
+                              onPressed: () => context.push(
+                                '/signup',
+                                extra: {"login": value},
+                              ),
                               child: Text(
                                 'signup'.tr(),
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodyMedium?.copyWith(color: colors.primary)?.copyWith(fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: colors.primary)
+                                    ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],

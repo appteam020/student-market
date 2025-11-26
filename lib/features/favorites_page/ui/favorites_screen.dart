@@ -25,7 +25,9 @@ class FavoritesScreen extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               case RequestState.success:
                 if (provider.favorites.isEmpty) {
-                  return Center(child: Text("You don't have any favorites"));
+                  return Center(
+                    child: Text("You don't have any favorites".tr()),
+                  );
                 }
                 return Padding(
                   padding: const EdgeInsets.all(8.0),

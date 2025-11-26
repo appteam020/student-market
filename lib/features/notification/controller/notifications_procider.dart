@@ -20,16 +20,18 @@ class NotificationsProvider extends ChangeNotifier {
     try {
       final response = await supabase
           .from("notifications")
-          .select(', tb_user!notifications_sender_id_fkey()')
-          .eq("reciver_user", "${supabase.auth.currentUser!.id}")
+          .select('*, tb_user!notifications_sender_id_fkey(*)')
+          .eq("reciver_user", supabase.auth.currentUser!.id)
           .order('created', ascending: false);
       print("SSSSSSSSSSSSS $response");
-      notifications = response.map((e) => NotificationModel.fromJson(e)).toList();
+      notifications = response
+          .map((e) => NotificationModel.fromJson(e))
+          .toList();
       notificationsState = RequestState.success;
 
       notifyListeners();
     } catch (e) {
-      print(e);
+      print(e.toString());
       notificationsState = RequestState.error;
       notifyListeners();
     }

@@ -72,9 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: double.infinity,
                     child: Text(
                       tr("section_categories"),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colors.textPrimary,
+                          ),
                     ),
                   ),
                 ),
@@ -98,7 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 _selectedCategory = index;
                                 setState(() {});
-                                value.getProducts(products: cat['title']!, context: context);
+                                value.getProducts(
+                                  products: cat['title']!,
+                                  context: context,
+                                );
                               },
                             );
                           },
@@ -114,7 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey.shade300, width: 1),
                     borderRadius: BorderRadius.circular(8.r),
-                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6, offset: const Offset(0, 2))],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.03),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.r),
@@ -133,9 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       tr("section_featured_offers"),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colors.textPrimary,
+                          ),
                     ),
                     ChangeNotifierProvider.value(
                       value: getIt<MainProvider>(),
@@ -146,14 +159,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      ViewAllFeatruredOffers(title: tr('section_featured_offers'), products: value.model),
+                                  builder: (context) => ViewAllFeatruredOffers(
+                                    title: tr('section_featured_offers'),
+                                    products: value.model,
+                                  ),
                                 ),
                               );
                             },
                             child: Text(
                               tr('action_view_all'),
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: colors.textSecondary),
                             ),
                           );
                         },
@@ -170,7 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 100.h,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemCount: value.model.length > 5 ? 5 : value.model.length,
+                          itemCount: value.model.length > 5
+                              ? 5
+                              : value.model.length,
                           separatorBuilder: (_, __) => SizedBox(width: 12.w),
                           itemBuilder: (context, index) {
                             final product = value.model[index];
@@ -185,7 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 seller: product.user!.fullName.toString(),
                                 onTap: () {
-                                  GoRouter.of(context).push("/product_details", extra: product);
+                                  GoRouter.of(
+                                    context,
+                                  ).push("/product_details", extra: product);
                                 },
                               );
                             }
@@ -206,23 +226,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             tr('section_all_products'),
-                            style: Theme.of(
-                              context,
-                            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: colors.textPrimary),
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: colors.textPrimary,
+                                ),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      ViewAllFeatruredOffers(title: tr('section_all_products'), products: value.model),
+                                  builder: (context) => ViewAllFeatruredOffers(
+                                    title: tr('section_all_products'),
+                                    products: value.model,
+                                  ),
                                 ),
                               );
                             },
                             child: Text(
                               tr('action_view_all'),
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.textSecondary),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: colors.textSecondary),
                             ),
                           ),
                         ],
@@ -243,22 +268,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: provider.model.length > 5 ? 5 : provider.model.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 22.h,
-                              crossAxisSpacing: 22.w,
-                              childAspectRatio: 0.58,
-                            ),
+                            itemCount: provider.model.length > 5
+                                ? 5
+                                : provider.model.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 22.h,
+                                  crossAxisSpacing: 22.w,
+                                  childAspectRatio: 0.58,
+                                ),
                             itemBuilder: (context, index) {
                               if (provider.model[index].isSold == true) {
                                 return Banner(
                                   message: "Sold",
                                   location: BannerLocation.topStart,
-                                  child: BuildSmallProductItem(product: provider.model[index]),
+                                  child: BuildSmallProductItem(
+                                    product: provider.model[index],
+                                  ),
                                 );
                               } else {
-                                return BuildSmallProductItem(product: provider.model[index]);
+                                return BuildSmallProductItem(
+                                  product: provider.model[index],
+                                );
                               }
                             },
                           );
@@ -271,7 +303,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(height: 8),
                               ElevatedButton(
                                 onPressed: () {
-                                  provider.getProducts(products: "all", context: context);
+                                  provider.getProducts(
+                                    products: "all",
+                                    context: context,
+                                  );
                                 },
                                 child: Text("Try Again"),
                               ),

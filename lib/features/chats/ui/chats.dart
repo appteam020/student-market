@@ -26,12 +26,13 @@ class Chats extends StatelessWidget {
             ..subscribeToConversations(),
           child: Consumer<ChatsProvider>(
             builder: (context, value, child) {
+              if (value.conversations.isEmpty) {
+                return Center(child: EmptyChats());
+              }
               return ListView.separated(
                 itemBuilder: (context, index) {
                   final conversation = value.conversations[index];
-                  if (value.conversations.isEmpty) {
-                    return EmptyChats();
-                  }
+
                   return ChatCard(
                     onTap: () {
                       Navigator.push(
@@ -42,7 +43,8 @@ class Chats extends StatelessWidget {
                               chatProvider: value,
                               partnerId: conversation.partner.userId ?? '',
                               partnerName: conversation.partner.fullName,
-                              onesignalId: conversation.partner.onesignalId ?? '',
+                              onesignalId:
+                                  conversation.partner.onesignalId ?? '',
                             );
                           },
                         ),
@@ -54,12 +56,19 @@ class Chats extends StatelessWidget {
                       radius: 24.r,
                       backgroundImage: conversation.partner.profileImage == null
                           ? null
-                          : NetworkImage(conversation.partner.profileImage ?? ''),
-                      child: conversation.partner.profileImage == null ? Icon(Icons.person, color: colors.primary) : null,
+                          : NetworkImage(
+                              conversation.partner.profileImage ?? '',
+                            ),
+                      child: conversation.partner.profileImage == null
+                          ? Icon(Icons.person, color: colors.primary)
+                          : null,
                     ),
                     name: conversation.partner.fullName,
                     lastMessage: conversation.lastMessage,
-                    time: get_time_ago.GetTimeAgo.parse(conversation.lastMessageTime, locale: context.locale.languageCode),
+                    time: get_time_ago.GetTimeAgo.parse(
+                      conversation.lastMessageTime,
+                      locale: context.locale.languageCode,
+                    ),
                   );
                 },
                 separatorBuilder: (context, index) => SizedBox(height: 12.h),

@@ -21,13 +21,19 @@ class MainProvider extends ChangeNotifier {
   }
 
   String productType = 'all';
-  void getProducts({required String products, required BuildContext context}) async {
+  void getProducts({
+    required String products,
+    required BuildContext context,
+  }) async {
     changeProductsState(RequestState.loading);
     productType = products;
     print(products);
     if (products == "all" || products == "category_all") {
       try {
-        final response = await Supabase.instance.client.from("product_table").select("*,tb_user(*)");
+        final response = await Supabase.instance.client
+            .from("product_table")
+            .select("*,tb_user(*)")
+            .order("created_at", ascending: false);
         print(response);
         model = response.map((e) => ProductModel.fromJson(e)).toList();
         print(model.length);
@@ -44,7 +50,10 @@ class MainProvider extends ChangeNotifier {
       }
     } else {
       try {
-        final response = await Supabase.instance.client.from("product_table").select("*,tb_user(*)").eq("category", products);
+        final response = await Supabase.instance.client
+            .from("product_table")
+            .select("*,tb_user(*)")
+            .eq("category", products);
         model = response.map((e) => ProductModel.fromJson(e)).toList();
         changeProductsState(RequestState.success);
       } on PostgrestException catch (e) {
@@ -78,10 +87,25 @@ class MainProvider extends ChangeNotifier {
     tr('nav_profile'),
   ];
   List<BottomNavItemData> items(BuildContext context) => [
-    BottomNavItemData(asset: 'assets/images/home.svg', label: context.tr('nav_home')),
-    BottomNavItemData(asset: 'assets/images/dashboard.svg', label: context.tr('nav_dashboard')),
-    BottomNavItemData(asset: 'assets/images/plus-circle.svg', label: context.tr('nav_add_product')),
-    BottomNavItemData(asset: 'assets/images/chats.svg', label: context.tr('nav_chats')),
-    BottomNavItemData(asset: 'assets/images/profile.svg', label: context.tr('nav_profile')),
+    BottomNavItemData(
+      asset: 'assets/images/home.svg',
+      label: context.tr('nav_home'),
+    ),
+    BottomNavItemData(
+      asset: 'assets/images/dashboard.svg',
+      label: context.tr('nav_dashboard'),
+    ),
+    BottomNavItemData(
+      asset: 'assets/images/plus-circle.svg',
+      label: context.tr('nav_add_product'),
+    ),
+    BottomNavItemData(
+      asset: 'assets/images/chats.svg',
+      label: context.tr('nav_chats'),
+    ),
+    BottomNavItemData(
+      asset: 'assets/images/profile.png',
+      label: context.tr('nav_profile'),
+    ),
   ];
 }

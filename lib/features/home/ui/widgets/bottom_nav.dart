@@ -6,10 +6,7 @@ class BottomNavItemData {
   final String asset;
   final String label;
 
-  BottomNavItemData({
-    required this.asset,
-    required this.label,
-  });
+  BottomNavItemData({required this.asset, required this.label});
 }
 
 class HomeBottomNav extends StatelessWidget {
@@ -53,19 +50,35 @@ class HomeBottomNav extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      item.asset,
-                      width: 24.w,
-                      height: 24.h,
-                      color: selected ? Theme.of(context).primaryColor : Colors.grey,
-                    ),
+                    if (item.asset.endsWith(".svg"))
+                      SvgPicture.asset(
+                        item.asset,
+                        width: 24.w,
+                        height: 24.h,
+
+                        color: selected
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
+                      ),
+                    if (item.asset.endsWith(".png"))
+                      Image.asset(
+                        item.asset,
+                        width: 24.w,
+                        height: 24.h,
+
+                        color: selected
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
+                      ),
                     SizedBox(height: 4.h),
                     Text(
                       item.label,
                       style: TextStyle(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w500,
-                        color: selected ? Theme.of(context).primaryColor : Colors.grey,
+                        color: selected
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
                       ),
                     ),
                   ],
